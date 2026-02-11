@@ -64,7 +64,7 @@
             align-items: center;
             padding: 4px;
             max-width: 140px;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(13, 71, 161, 0.15);
             border: 3px solid #fff;
@@ -79,21 +79,29 @@
             max-height: 180px;
         }
 
+        h1 {
+            color: var(--text-dark);
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .nmc-number {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            opacity: 0.85;
+        }
+
         .stethoscope-icon {
             font-size: 1.8rem;
             margin-bottom: 0.4rem;
             animation: heartbeat 2s infinite;
             color: var(--primary-color);
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        h1 {
-            color: var(--text-dark);
-            font-size: 1.7rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
         }
 
         .degrees {
@@ -187,6 +195,7 @@
         @media (max-width: 480px) {
             .card { padding: 1.5rem 1.2rem 1.2rem; }
             h1 { font-size: 1.4rem; }
+            .nmc-number { font-size: 0.75rem; }
             .photo-frame { max-width: 120px; }
             .profile-photo { max-width: 112px; }
             .degree-item { font-size: 0.8rem; padding: 0.5rem; }
@@ -206,9 +215,10 @@
                  alt="Dr. Upendra Poudel">
         </div>
 
-        <div class="stethoscope-icon">🩺</div>
-        
         <h1>Dr. Upendra Poudel</h1>
+        <div class="nmc-number">NMC: 20138</div>
+
+        <div class="stethoscope-icon">🩺</div>
         
         <div class="degrees">
             <div class="degree-item">
