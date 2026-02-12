@@ -1,265 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Dr. Upendra Poudel</title>
-   <style>
-       :root {
-           --primary-color: #0d47a1;
-           --secondary-color: #1976d2;
-           --accent-color: #e3f2fd;
-           --text-dark: #1a237e;
-           --text-light: #546e7a;
-           --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-           --glass-bg: rgba(255, 255, 255, 0.9);
-           --glass-border: rgba(255, 255, 255, 0.3);
-           --ecg-color: #e53935;
-       }
-
-       * { margin: 0; padding: 0; box-sizing: border-box; }
-
-       body {
-           font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-           background: var(--bg-gradient);
-           height: 100vh;
-           display: flex;
-           justify-content: center;
-           align-items: center;
-           overflow: hidden;
-       }
-
-       .shape {
-           position: absolute;
-           border-radius: 50%;
-           filter: blur(80px);
-           z-index: 0;
-           opacity: 0.6;
-           animation: float 10s infinite ease-in-out;
-       }
-       .shape-1 { width: 300px; height: 300px; background: #bbdefb; top: -50px; left: -50px; }
-       .shape-2 { width: 400px; height: 400px; background: #e1bee7; bottom: -100px; right: -100px; animation-delay: -5s; }
-
-       .card {
-           position: relative;
-           z-index: 1;
-           background: var(--glass-bg);
-           backdrop-filter: blur(20px);
-           border: 1px solid var(--glass-border);
-           border-radius: 24px;
-           padding: 2.2rem 2rem 1.6rem;
-           width: 92%;
-           max-width: 480px;
-           text-align: center;
-           box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           animation: slideUp 0.8s ease forwards;
-       }
-
-       .photo-frame {
-           display: inline-flex;
-           justify-content: center;
-           align-items: center;
-           padding: 4px;
-           max-width: 160px;
-           margin-bottom: 0.8rem;
-           border-radius: 12px;
-           box-shadow: 0 8px 20px rgba(13, 71, 161, 0.15);
-           border: 3px solid #fff;
-           background: white;
-       }
-
-       .profile-photo {
-           display: block;
-           width: auto;
-           height: auto;
-           max-width: 152px;
-           max-height: 200px;
-       }
-
-       h1 {
-           color: var(--text-dark);
-           font-size: 1.9rem;
-           font-weight: 700;
-           margin-bottom: 0.2rem;
-           letter-spacing: -0.5px;
-           line-height: 1.2;
-       }
-
-       .nmc-number {
-           color: var(--text-light);
-           font-size: 0.85rem;
-           font-weight: 600;
-           margin-bottom: 0.5rem;
-           opacity: 0.85;
-       }
-
-       .stethoscope-icon {
-           font-size: 2rem;
-           margin-bottom: 0.5rem;
-           animation: heartbeat 2s infinite;
-           color: var(--primary-color);
-           filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-       }
-
-       .degrees {
-           display: flex;
-           flex-direction: column;
-           gap: 0.6rem;
-           margin-bottom: 1.4rem;
-           width: 100%;
-       }
-
-       .degree-item {
-           font-size: 0.9rem;
-           color: var(--text-light);
-           font-weight: 500;
-           padding: 0.7rem;
-           border-radius: 10px;
-           background: rgba(255, 255, 255, 0.5);
-           border: 1px solid rgba(255,255,255,0.6);
-       }
-
-       .ecg-container {
-           position: relative;
-           width: 150px;
-           height: 24px;
-           margin-bottom: 0.6rem;
-           overflow: hidden;
-       }
-
-       .ecg-line {
-           position: absolute;
-           top: 50%;
-           left: 0;
-           width: 100%;
-           height: 2px;
-           background: rgba(229, 57, 53, 0.25);
-           transform: translateY(-50%);
-       }
-
-       .ecg-pulse {
-           position: absolute;
-           top: 50%;
-           left: -30%;
-           width: 48px;
-           height: 20px;
-           transform: translateY(-50%);
-           animation: ecgMove 2s linear infinite;
-           filter: drop-shadow(0 0 4px rgba(229, 57, 53, 0.6));
-       }
-
-       .ecg-pulse svg {
-           width: 100%;
-           height: 100%;
-           fill: none;
-           stroke: var(--ecg-color);
-           stroke-width: 2.2;
-           stroke-linecap: round;
-           stroke-linejoin: round;
-       }
-
-       .footer {
-           color: var(--primary-color);
-           font-size: 1rem;
-           font-weight: 700;
-           letter-spacing: 1.5px;
-           text-transform: uppercase;
-       }
-
-       @keyframes slideUp { 
-           from { opacity: 0; transform: translateY(30px); } 
-           to { opacity: 1; transform: translateY(0); } 
-       }
-       
-       @keyframes heartbeat { 
-           0% { transform: scale(1); } 
-           14% { transform: scale(1.15); } 
-           28% { transform: scale(1); } 
-           42% { transform: scale(1.15); } 
-           70% { transform: scale(1); } 
-       }
-       
-       @keyframes float { 
-           0%, 100% { transform: translate(0, 0); } 
-           50% { transform: translate(20px, 40px); } 
-       }
-
-       @keyframes ecgMove {
-           0% { left: -30%; }
-           100% { left: 100%; }
-       }
-
-       @media (max-width: 480px) {
-           .card { padding: 1.8rem 1.4rem 1.4rem; max-width: 400px; }
-           h1 { font-size: 1.6rem; }
-           .nmc-number { font-size: 0.8rem; }
-           .photo-frame { max-width: 140px; }
-           .profile-photo { max-width: 132px; }
-           .degree-item { font-size: 0.85rem; padding: 0.6rem; }
-           .ecg-container { width: 130px; height: 22px; }
-           .footer { font-size: 0.95rem; }
-       }
-   </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Cloudflare! ⛅️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #F38020;
+            --primary-light: #FFA927;
+            --background: #0a0a0a;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --glow: rgba(243, 128, 32, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--background);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(243, 128, 32, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 169, 39, 0.05) 0%, transparent 50%);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+            padding: 3.5rem 3rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(243, 128, 32, 0.5) 50%, 
+                transparent);
+        }
+        
+        .logo-wrapper {
+            display: inline-block;
+            padding: 1.2rem;
+            background: rgba(243, 128, 32, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(243, 128, 32, 0.2);
+            margin-bottom: 2.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-wrapper:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--glow);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            display: block;
+        }
+        
+        h1 {
+            font-size: 2.75rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        .image-container {
+            position: relative;
+            margin: 2.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .imgur-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-container:hover .imgur-image {
+            transform: scale(1.02);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4ade80;
+            margin-bottom: 2.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+        
+        .links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+        
+        .link-card {
+            padding: 1.3rem 1.5rem;
+            border-radius: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .link-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(243, 128, 32, 0.4);
+            box-shadow: 
+                0 12px 30px rgba(0, 0, 0, 0.4),
+                0 0 20px var(--glow);
+        }
+        
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .link-card:hover a {
+            color: var(--primary-light);
+        }
+        
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover .arrow {
+            transform: translateX(4px);
+        }
+        
+        .footer-text {
+            display: block;
+            margin-top: 2.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        @media (max-width: 640px) {
+            body {
+                padding: 1.5rem;
+            }
+            
+            .container {
+                padding: 2.5rem 1.8rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .links {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-   <div class="shape shape-1"></div>
-   <div class="shape shape-2"></div>
-
-   <div class="card">
-       <div class="photo-frame">
-           <img src="https://github.com/user-attachments/assets/922bf099-b031-44a7-b861-3580840690d0" 
-                class="profile-photo" 
-                alt="Dr. Upendra Poudel">
-       </div>
-
-       <h1>Dr. Upendra Poudel</h1>
-       <div class="nmc-number">NMC: 20138</div>
-
-       <div class="stethoscope-icon">🩺</div>
-       
-       <div class="degrees">
-           <div class="degree-item">
-               Masters In Internal Medicine<br>
-               <span style="font-size: 0.85em; opacity: 0.8;">Dali University, China</span>
-           </div>
-           
-           <div class="degree-item">
-               Doctor Of Medicine<br>
-               <span style="font-size: 0.85em; opacity: 0.8;">Angeles University Foundation, Philippines</span>
-           </div>
-       </div>
-
-       <div class="ecg-container">
-           <div class="ecg-line"></div>
-           <div class="ecg-pulse">
-               <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-                   <polyline points="0,20 18,20 26,18 32,12 38,26 44,10 52,28 62,20 72,20 100,20"/>
-               </svg>
-           </div>
-       </div>
-
-       <div class="footer">
-           Healing With Compassion..
-       </div>
-   </div>
-
-   <script>
-       const card = document.querySelector('.card');
-       const body = document.querySelector('body');
-
-       body.addEventListener('mousemove', (e) => {
-           const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-           const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-           card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-       });
-
-       body.addEventListener('mouseleave', () => {
-           card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-       });
-   </script>
+    <div class="container">
+        <div class="logo-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Cloudflare_Logo.svg/512px-Cloudflare_Logo.svg.png" alt="Cloudflare Logo" class="logo">
+        </div>
+        
+        <h1>Welcome to Cloudflare</h1>
+        <p class="subtitle">Your services are successfully configured and operational.</p>
+        
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>All Systems Operational</span>
+        </div>
+        
+        <div class="image-container">
+            <img src="https://i.imgur.com/4XvzrJJ.jpg" alt="Cloudflare Global Network" class="imgur-image">
+        </div>
+        
+        <div class="links">
+            <div class="link-card">
+                <a href="https://developers.cloudflare.com/">
+                    <span>Documentation</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <div class="link-card">
+                <a href="https://community.cloudflare.com/">
+                    <span>Community</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+        
+        <em class="footer-text">Powered by Cloudflare's global edge network</em>
+    </div>
 </body>
 </html>
