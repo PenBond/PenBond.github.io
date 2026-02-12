@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscription Converter</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -14,29 +12,17 @@
         }
 
         :root {
-            --bg-gradient-1: #1a1a2e;
-            --bg-gradient-2: #16213e;
-            --bg-gradient-3: #0f0f23;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-bg-hover: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-border-hover: rgba(255, 255, 255, 0.2);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.4);
-            --accent-blue: #007AFF;
-            --accent-purple: #AF52DE;
-            --accent-pink: #FF2D55;
-            --accent-green: #30D158;
-            --accent-orange: #FF9500;
-            --accent-teal: #5AC8FA;
-            --accent-cyan: #32D4DE;
-            --text-primary: rgba(255, 255, 255, 0.95);
-            --text-secondary: rgba(255, 255, 255, 0.6);
-            --text-tertiary: rgba(255, 255, 255, 0.4);
-            --radius-xl: 24px;
-            --radius-lg: 18px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --radius: 12px;
         }
 
         html, body {
@@ -45,1014 +31,518 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.5;
+            line-height: 1.6;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
-        }
-
-        /* Animated Background Orbs */
-        .bg-orbs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0, 122, 255, 0.4) 0%, transparent 70%);
-            top: -10%;
-            left: -5%;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(175, 82, 222, 0.35) 0%, transparent 70%);
-            top: 50%;
-            right: -10%;
-            animation-delay: -5s;
-            animation-duration: 25s;
-        }
-
-        .orb-3 {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(90, 200, 250, 0.3) 0%, transparent 70%);
-            bottom: -5%;
-            left: 30%;
-            animation-delay: -10s;
-            animation-duration: 22s;
-        }
-
-        .orb-4 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 45, 85, 0.25) 0%, transparent 70%);
-            top: 30%;
-            left: 50%;
-            animation-delay: -15s;
-            animation-duration: 18s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -30px) scale(1.05); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(20px, 10px) scale(1.02); }
-        }
-
-        /* Noise Texture Overlay */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0.015;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         .container {
-            max-width: 880px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 40px 24px;
-            position: relative;
-            z-index: 2;
+            padding: 20px;
+            min-height: 100%;
         }
 
-        /* Header */
         header {
             text-align: center;
-            margin-bottom: 48px;
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .logo-container {
-            margin-bottom: 28px;
-        }
-
-        .logo {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 12px 40px rgba(0, 122, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-            position: relative;
-            animation: logoFloat 6s ease-in-out infinite;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 50%);
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            margin-bottom: 30px;
+            padding: 20px 0;
         }
 
         h1 {
-            font-size: 2.25rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            letter-spacing: -0.025em;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .subtitle {
-            font-size: 1.05rem;
             color: var(--text-secondary);
-            font-weight: 400;
+            font-size: 0.95rem;
         }
 
-        .protocol-tags {
+        .protocols {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
-            margin-top: 24px;
+            margin-top: 15px;
         }
 
-        .protocol-tag {
-            padding: 6px 14px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+        .protocol-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
-            color: var(--text-secondary);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
-        .protocol-tag:hover {
-            background: var(--glass-bg-hover);
-            border-color: var(--glass-border-hover);
-            color: var(--text-primary);
-            transform: translateY(-1px);
-        }
-
-        /* Glass Card */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: 28px;
-            margin-bottom: 24px;
-            box-shadow: var(--glass-shadow);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
-        }
-
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.2s; }
-        .glass-card:nth-child(3) { animation-delay: 0.3s; }
-
-        .glass-card:hover {
-            border-color: var(--glass-border-hover);
-            box-shadow: var(--glass-shadow-hover);
-            transform: translateY(-2px);
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 22px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .card-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.2) 0%, rgba(175, 82, 222, 0.15) 100%);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            border: 1px solid rgba(0, 122, 255, 0.2);
+            font-size: 1.3rem;
         }
 
         .card-title {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 600;
-            letter-spacing: -0.01em;
         }
 
-        .card-subtitle {
+        .card-description {
             font-size: 0.8rem;
-            color: var(--text-tertiary);
+            color: var(--text-secondary);
             margin-left: auto;
         }
 
-        /* Segmented Control (Tabs) */
-        .segmented-control {
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .format-selector {
             display: flex;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: var(--radius-md);
-            padding: 4px;
-            margin-bottom: 20px;
-            gap: 4px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
-        .segment-btn {
+        .format-btn {
             flex: 1;
-            min-width: 60px;
-            padding: 10px 12px;
-            background: transparent;
-            border: none;
-            border-radius: var(--radius-sm);
-            color: var(--text-secondary);
-            font-size: 0.78rem;
-            font-weight: 500;
-            font-family: inherit;
+            min-width: 80px;
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 0.85rem;
         }
 
-        .segment-btn:hover {
+        .format-btn:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .format-btn.active {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .format-btn .version {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
+        }
+
+        .convert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .convert-btn:active {
+            transform: translateY(0);
+        }
+
+        .output-section {
+            margin-top: 25px;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .output-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .copy-btn, .download-btn {
+            padding: 8px 16px;
+            background: var(--success);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .download-btn {
+            background: var(--accent);
+        }
+
+        .copy-btn:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+
+        .download-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.02);
+        }
+
+        .copy-btn.copied {
+            background: #065f46;
+        }
+
+        .output-area {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .output-area:empty::before {
+            content: 'Converted output will appear here...';
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #60a5fa;
+        }
+
+        .stat-item span {
+            font-weight: 700;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent);
             color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
         }
 
-        .segment-btn.active {
-            background: rgba(255, 255, 255, 0.12);
-            color: var(--text-primary);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
         }
 
-        /* Input Groups */
         .input-group {
             display: none;
         }
 
         .input-group.active {
             display: block;
-            animation: fadeIn 0.25s ease;
-        }
-
-        /* Textarea */
-        textarea {
-            width: 100%;
-            min-height: 150px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            color: var(--text-primary);
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 0.82rem;
-            line-height: 1.65;
-            resize: vertical;
-            transition: all 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15), 0 0 20px rgba(0, 122, 255, 0.1);
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        textarea::placeholder {
-            color: var(--text-tertiary);
-        }
-
-        textarea::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        textarea::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        textarea::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 3px;
         }
 
         .helper-text {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 10px;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-        }
-
-        /* Format Selector Grid */
-        .format-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        .format-card {
-            background: rgba(0, 0, 0, 0.2);
-            border: 2px solid transparent;
-            border-radius: var(--radius-lg);
-            padding: 20px 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            font-family: inherit;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .format-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .format-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .format-card.active {
-            border-color: var(--accent-blue);
-            background: rgba(0, 122, 255, 0.1);
-        }
-
-        .format-card.active::before {
-            opacity: 0.08;
-        }
-
-        .format-icon {
-            font-size: 1.75rem;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .format-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .format-version {
-            font-size: 0.7rem;
-            color: var(--text-tertiary);
-            position: relative;
-            z-index: 1;
-        }
-
-        .format-card.active .format-name {
-            color: var(--accent-teal);
-        }
-
-        /* Info Section */
-        .info-section {
-            margin-top: 24px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .info-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .info-header-icon {
-            font-size: 1.1rem;
-        }
-
-        .info-header-text {
-            font-size: 0.85rem;
-            color: var(--accent-orange);
-            font-weight: 500;
-        }
-
-        .info-header-text strong {
-            color: #fde047;
-        }
-
-        .info-items {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.2s ease;
-        }
-
-        .info-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .info-item-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .info-item-icon.base64 {
-            background: linear-gradient(135deg, rgba(255, 149, 0, 0.2), rgba(255, 149, 0, 0.1));
-            border: 1px solid rgba(255, 149, 0, 0.2);
-        }
-
-        .info-item-icon.singbox {
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(90, 200, 250, 0.1));
-            border: 1px solid rgba(0, 122, 255, 0.2);
-        }
-
-        .info-item-icon.clash {
-            background: linear-gradient(135deg, rgba(175, 82, 222, 0.2), rgba(255, 45, 85, 0.1));
-            border: 1px solid rgba(175, 82, 222, 0.2);
-        }
-
-        .info-item-content {
-            flex: 1;
-        }
-
-        .info-item-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 3px;
-        }
-
-        .info-item-desc {
             font-size: 0.75rem;
             color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .info-item-apps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
             margin-top: 8px;
         }
 
-        .app-badge {
-            padding: 3px 8px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        /* Primary Button */
-        .primary-btn {
-            width: 100%;
-            padding: 16px 24px;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, #0056b3 100%);
-            border: none;
-            border-radius: var(--radius-md);
-            color: white;
-            font-size: 0.95rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-top: 24px;
-            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .primary-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 122, 255, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-        }
-
-        .primary-btn:hover::before {
-            left: 100%;
-        }
-
-        .primary-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Output Section */
-        .output-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .output-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-
-        .output-badge {
-            padding: 5px 12px;
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.15), rgba(175, 82, 222, 0.1));
-            border: 1px solid rgba(0, 122, 255, 0.2);
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--accent-teal);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 10px 18px;
-            border: none;
-            border-radius: var(--radius-sm);
+        .info-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
             font-size: 0.8rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.25s ease;
+            color: #fbbf24;
         }
 
-        .copy-btn {
-            background: linear-gradient(135deg, var(--accent-green), #28a745);
-            color: white;
-            box-shadow: 0 4px 15px rgba(48, 209, 88, 0.25);
+        .info-box strong {
+            color: #fcd34d;
         }
 
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(48, 209, 88, 0.35);
-        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
 
-        .copy-btn.copied {
-            background: linear-gradient(135deg, #1a7f37, #155d27);
-        }
+            h1 {
+                font-size: 1.4rem;
+            }
 
-        .download-btn {
-            background: linear-gradient(135deg, var(--accent-purple), #9333ea);
-            color: white;
-            box-shadow: 0 4px 15px rgba(175, 82, 222, 0.25);
-        }
+            .format-btn {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+                min-width: 70px;
+            }
 
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(175, 82, 222, 0.35);
-        }
+            textarea {
+                min-height: 100px;
+            }
 
-        /* Output Area */
-        .output-area {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: var(--radius-md);
-            padding: 18px;
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 0.72rem;
-            line-height: 1.7;
-            max-height: 380px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
-            color: var(--text-secondary);
-        }
+            .card {
+                padding: 15px;
+            }
 
-        .output-area::-webkit-scrollbar {
-            width: 6px;
-        }
+            .card-description {
+                display: none;
+            }
 
-        .output-area::-webkit-scrollbar-track {
-            background: transparent;
-        }
+            .output-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-        .output-area::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 3px;
-        }
+            .btn-group {
+                width: 100%;
+            }
 
-        .output-area:empty::before {
-            content: '✨ Your converted configuration will appear here...';
-            color: var(--text-tertiary);
-            font-style: italic;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .stat-chip {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .stat-chip .label {
-            color: var(--text-tertiary);
-        }
-
-        .stat-chip .value {
-            font-weight: 700;
-            color: var(--accent-teal);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 32px 0;
-            animation: fadeInUp 0.6s ease 0.4s backwards;
-        }
-
-        .footer-text {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container { padding: 24px 16px; }
-            h1 { font-size: 1.75rem; }
-            .subtitle { font-size: 0.95rem; }
-            .format-grid { grid-template-columns: repeat(2, 1fr); }
-            .glass-card { padding: 22px; }
-            .card-subtitle { display: none; }
-            .output-header { flex-direction: column; align-items: stretch; }
-            .btn-group { width: 100%; }
-            .action-btn { flex: 1; justify-content: center; }
-            .info-item { flex-direction: column; gap: 10px; }
-            .info-item-icon { width: 28px; height: 28px; font-size: 0.9rem; }
-            .segment-btn { min-width: 50px; padding: 8px 10px; font-size: 0.72rem; }
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 1.5rem; }
-            .logo { width: 60px; height: 60px; font-size: 26px; border-radius: 16px; }
-            .format-card { padding: 16px 8px; }
-            .format-icon { font-size: 1.4rem; }
-            .format-name { font-size: 0.78rem; }
-            .segment-btn { padding: 8px 8px; font-size: 0.7rem; min-width: 45px; }
-            .protocol-tag { padding: 5px 10px; font-size: 0.7rem; }
-            .info-header { flex-direction: column; align-items: flex-start; gap: 6px; }
-            .info-header-text { font-size: 0.8rem; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .copy-btn, .download-btn {
+                flex: 1;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background Effects -->
-    <div class="bg-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
-    </div>
-    <div class="noise-overlay"></div>
-
     <div class="container">
-        <!-- Header -->
         <header>
-            <div class="logo-container">
-                <div class="logo">🔄</div>
-            </div>
-            <h1>Subscription Converter</h1>
-            <p class="subtitle">Transform proxy configurations into any format</p>
-            <div class="protocol-tags">
-                <span class="protocol-tag">VLESS</span>
-                <span class="protocol-tag">Trojan</span>
-                <span class="protocol-tag">Shadowsocks</span>
-                <span class="protocol-tag">Hysteria2</span>
-                <span class="protocol-tag">WireGuard</span>
+            <h1>🔄 Subscription Converter</h1>
+            <p class="subtitle">Convert proxy nodes to different subscription formats</p>
+            <div class="protocols">
+                <span class="protocol-badge">VLESS</span>
+                <span class="protocol-badge">Trojan</span>
+                <span class="protocol-badge">Shadowsocks</span>
+                <span class="protocol-badge">Hysteria2</span>
+                <span class="protocol-badge">WireGuard</span>
             </div>
         </header>
 
-        <!-- Input Card -->
-        <div class="glass-card">
+        <div class="card">
             <div class="card-header">
-                <div class="card-icon">📥</div>
+                <span class="card-icon">📥</span>
                 <span class="card-title">Input Nodes</span>
-                <span class="card-subtitle">Paste your configurations</span>
+                <span class="card-description">Paste your proxy configurations</span>
             </div>
 
-            <div class="segmented-control">
-                <button class="segment-btn active" data-tab="all">All</button>
-                <button class="segment-btn" data-tab="base64">Base64</button>
-                <button class="segment-btn" data-tab="vless">VLESS</button>
-                <button class="segment-btn" data-tab="trojan">Trojan</button>
-                <button class="segment-btn" data-tab="ss">SS</button>
-                <button class="segment-btn" data-tab="hy2">Hy2</button>
-                <button class="segment-btn" data-tab="wg">WG</button>
+            <div class="tab-container">
+                <button class="tab-btn active" data-tab="all">All Nodes</button>
+                <button class="tab-btn" data-tab="vless">VLESS</button>
+                <button class="tab-btn" data-tab="trojan">Trojan</button>
+                <button class="tab-btn" data-tab="ss">Shadowsocks</button>
+                <button class="tab-btn" data-tab="hy2">Hysteria2</button>
+                <button class="tab-btn" data-tab="wg">WireGuard</button>
             </div>
 
             <div class="input-group active" id="all-input">
-                <textarea id="all-nodes" placeholder="Paste all nodes here — supports mixed protocols&#10;&#10;Examples:&#10;vless://uuid@server:443?type=ws&security=tls#Name&#10;trojan://password@server:443?sni=example.com#Name&#10;ss://method:password@server:port#Name&#10;hysteria2://password@server:443?sni=example.com#Name"></textarea>
-                <p class="helper-text">💡 One node per line • Mixed protocols supported</p>
-            </div>
-
-            <div class="input-group" id="base64-input">
-                <textarea id="base64-nodes" placeholder="Paste your Base64 encoded subscription content here&#10;&#10;Example:&#10;dmxlc3M6Ly91dWlkQHNlcnZlcjo0NDM/dHlwZT13cyZzZWN1cml0eT10bHMjTmFtZQ==&#10;&#10;The content will be automatically decoded and parsed"></textarea>
-                <p class="helper-text">💡 Paste Base64 encoded subscription • Auto-decodes on convert</p>
+                <textarea id="all-nodes" placeholder="Paste all your nodes here (vless://, trojan://, ss://, hysteria2://, hy2://, wireguard://)&#10;One node per line..."></textarea>
+                <p class="helper-text">Supports mixed protocols - one node per line</p>
             </div>
 
             <div class="input-group" id="vless-input">
-                <textarea id="vless-nodes" placeholder="vless://uuid@server:443?type=ws&security=tls&sni=example.com&host=example.com&path=/path#Name"></textarea>
-                <p class="helper-text">💡 Supports WebSocket, gRPC, TCP, HTTP, Reality</p>
+                <textarea id="vless-nodes" placeholder="vless://uuid@server:port?type=ws&security=tls&...#Name&#10;vless://..."></textarea>
+                <p class="helper-text">VLESS nodes with WebSocket, gRPC, TCP, XHTTP transport</p>
             </div>
 
             <div class="input-group" id="trojan-input">
-                <textarea id="trojan-nodes" placeholder="trojan://password@server:443?type=ws&sni=example.com&path=/path#Name"></textarea>
-                <p class="helper-text">💡 Supports WebSocket and gRPC transport</p>
+                <textarea id="trojan-nodes" placeholder="trojan://password@server:port?type=ws&sni=...#Name&#10;trojan://..."></textarea>
+                <p class="helper-text">Trojan nodes with optional WebSocket/gRPC transport</p>
             </div>
 
             <div class="input-group" id="ss-input">
                 <textarea id="ss-nodes" placeholder="ss://base64(method:password)@server:port#Name&#10;ss://method:password@server:port#Name"></textarea>
-                <p class="helper-text">💡 SIP002 format supported</p>
+                <p class="helper-text">Shadowsocks nodes (SIP002 format supported)</p>
             </div>
 
             <div class="input-group" id="hy2-input">
-                <textarea id="hy2-nodes" placeholder="hysteria2://password@server:443?sni=example.com#Name&#10;hy2://password@server:443?obfs=salamander&obfs-password=xxx#Name"></textarea>
-                <p class="helper-text">💡 Supports obfuscation options</p>
+                <textarea id="hy2-nodes" placeholder="hysteria2://password@server:port?sni=...#Name&#10;hy2://password@server:port?...#Name"></textarea>
+                <p class="helper-text">Hysteria2 nodes with optional obfs</p>
             </div>
 
             <div class="input-group" id="wg-input">
-                <textarea id="wg-nodes" placeholder="My WireGuard Server&#10;[Interface]&#10;PrivateKey = your_private_key&#10;Address = 10.0.0.2/32&#10;DNS = 1.1.1.1&#10;&#10;[Peer]&#10;PublicKey = server_public_key&#10;AllowedIPs = 0.0.0.0/0&#10;Endpoint = server:51820"></textarea>
-                <p class="helper-text">💡 Standard WireGuard config format</p>
+                <textarea id="wg-nodes" placeholder="WireGuard Config Name&#10;[Interface]&#10;PrivateKey = ...&#10;Address = 10.0.0.2/32&#10;DNS = 1.1.1.1&#10;&#10;[Peer]&#10;PublicKey = ...&#10;AllowedIPs = 0.0.0.0/0&#10;Endpoint = server:port"></textarea>
+                <p class="helper-text">Standard WireGuard configuration format</p>
             </div>
         </div>
 
-        <!-- Format Selection Card -->
-        <div class="glass-card">
+        <div class="card">
             <div class="card-header">
-                <div class="card-icon">⚙️</div>
+                <span class="card-icon">⚙️</span>
                 <span class="card-title">Output Format</span>
-                <span class="card-subtitle">Select target</span>
             </div>
-
-            <div class="format-grid">
-                <button class="format-card" data-format="base64">
-                    <div class="format-icon">📄</div>
-                    <div class="format-name">Base64</div>
-                    <div class="format-version">Raw Links</div>
+            <div class="format-selector">
+                <button class="format-btn" data-format="base64">
+                    📄 Base64
+                    <span class="version">Raw Links</span>
                 </button>
-                <button class="format-card active" data-format="singbox-legacy">
-                    <div class="format-icon">📦</div>
-                    <div class="format-name">Sing-box</div>
-                    <div class="format-version">1.11.x iOS</div>
+                <button class="format-btn active" data-format="singbox-legacy">
+                    📦 Sing-box
+                    <span class="version">1.11.x (iOS)</span>
                 </button>
-                <button class="format-card" data-format="singbox-new">
-                    <div class="format-icon">📦</div>
-                    <div class="format-name">Sing-box</div>
-                    <div class="format-version">1.12.0+</div>
+                <button class="format-btn" data-format="singbox-new">
+                    📦 Sing-box
+                    <span class="version">1.12.0+</span>
                 </button>
-                <button class="format-card" data-format="clash">
-                    <div class="format-icon">🐱</div>
-                    <div class="format-name">Clash Meta</div>
-                    <div class="format-version">Mihomo</div>
+                <button class="format-btn" data-format="clash">
+                    🐱 Clash Meta
+                    <span class="version">Mihomo</span>
                 </button>
             </div>
-
-            <!-- Info Section -->
-            <div class="info-section">
-                <div class="info-header">
-                    <span class="info-header-icon">✨</span>
-                    <span class="info-header-text"><strong>Sing-box 1.11.x</strong> for iOS (SFI) &nbsp;•&nbsp; <strong>1.12.0+</strong> for Android &nbsp;•&nbsp; <strong>Clash Meta</strong> for Mihomo/Stash</span>
-                </div>
-                
-                <div class="info-items">
-                    <div class="info-item">
-                        <div class="info-item-icon base64">📄</div>
-                        <div class="info-item-content">
-                            <div class="info-item-title">Base64 Format</div>
-                            <div class="info-item-desc">Copy base64 directly and paste into supported apps</div>
-                            <div class="info-item-apps">
-                                <span class="app-badge">Karing</span>
-                                <span class="app-badge">Hiddify</span>
-                                <span class="app-badge">Streisand</span>
-                                <span class="app-badge">Shadowrocket</span>
-                                <span class="app-badge">V2rayNG</span>
-                                <span class="app-badge">NekoBox</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-item-icon singbox">📦</div>
-                        <div class="info-item-content">
-                            <div class="info-item-title">Sing-box JSON</div>
-                            <div class="info-item-desc">Copy or download JSON file and import to Sing-box or supported clients</div>
-                            <div class="info-item-apps">
-                                <span class="app-badge">SFI (iOS)</span>
-                                <span class="app-badge">SFA (Android)</span>
-                                <span class="app-badge">SFM (macOS)</span>
-                                <span class="app-badge">sing-box</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-item-icon clash">🐱</div>
-                        <div class="info-item-content">
-                            <div class="info-item-title">Clash YAML</div>
-                            <div class="info-item-desc">Download YAML file and import to Clash Meta or supported clients</div>
-                            <div class="info-item-apps">
-                                <span class="app-badge">Mihomo</span>
-                                <span class="app-badge">Clash Verge</span>
-                                <span class="app-badge">Stash</span>
-                                <span class="app-badge">ClashX Meta</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-box">
+                <strong>💡 Tip:</strong> Use <strong>Sing-box 1.11.x</strong> for iOS (SFI), <strong>Sing-box 1.12.0+</strong> for Android (SFA) and newer clients, <strong>Clash Meta</strong> for Mihomo/Stash.
             </div>
-
-            <button class="primary-btn" onclick="convertNodes()">
-                🚀 Convert Configuration
-            </button>
+            <button class="convert-btn" onclick="convertNodes()">🚀 Convert Now</button>
         </div>
 
-        <!-- Output Card -->
-        <div class="glass-card">
-            <div class="output-header">
-                <div class="output-title">
-                    <span>📤</span>
-                    <span>Output</span>
-                    <span class="output-badge" id="format-label">Sing-box 1.11.x</span>
+        <div class="output-section">
+            <div class="card">
+                <div class="output-header">
+                    <div class="output-title">
+                        <span>📤</span>
+                        <span>Converted Output</span>
+                        <span id="format-label" style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">(Sing-box 1.11.x)</span>
+                    </div>
+                    <div class="btn-group">
+                        <button class="copy-btn" onclick="copyOutput()">
+                            <span>📋</span>
+                            <span id="copy-text">Copy</span>
+                        </button>
+                        <button class="download-btn" onclick="downloadOutput()">
+                            <span>⬇️</span>
+                            <span>Download</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="btn-group">
-                    <button class="action-btn copy-btn" onclick="copyOutput()">
-                        <span>📋</span>
-                        <span id="copy-text">Copy</span>
-                    </button>
-                    <button class="action-btn download-btn" onclick="downloadOutput()">
-                        <span>⬇️</span>
-                        <span>Download</span>
-                    </button>
+                <div class="output-area" id="output"></div>
+                <div class="stats" id="stats" style="display: none;">
+                    <div class="stat-item">Total: <span id="total-count">0</span></div>
+                    <div class="stat-item">VLESS: <span id="vless-count">0</span></div>
+                    <div class="stat-item">Trojan: <span id="trojan-count">0</span></div>
+                    <div class="stat-item">SS: <span id="ss-count">0</span></div>
+                    <div class="stat-item">Hy2: <span id="hy2-count">0</span></div>
+                    <div class="stat-item">WG: <span id="wg-count">0</span></div>
                 </div>
-            </div>
-            
-            <div class="output-area" id="output"></div>
-            
-            <div class="stats-grid" id="stats" style="display: none;">
-                <div class="stat-chip"><span class="label">Total</span><span class="value" id="total-count">0</span></div>
-                <div class="stat-chip"><span class="label">VLESS</span><span class="value" id="vless-count">0</span></div>
-                <div class="stat-chip"><span class="label">Trojan</span><span class="value" id="trojan-count">0</span></div>
-                <div class="stat-chip"><span class="label">SS</span><span class="value" id="ss-count">0</span></div>
-                <div class="stat-chip"><span class="label">Hy2</span><span class="value" id="hy2-count">0</span></div>
-                <div class="stat-chip"><span class="label">WG</span><span class="value" id="wg-count">0</span></div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer>
-            <div class="footer-text">
-                <span>⚡</span>
-                <span>Advanced Multi-Protocol Converter</span>
-            </div>
-        </footer>
     </div>
 
     <script>
         let selectedFormat = 'singbox-legacy';
         let convertedOutput = '';
 
-        const formatLabels = { 'base64': 'Base64', 'singbox-legacy': 'Sing-box 1.11.x', 'singbox-new': 'Sing-box 1.12.0+', 'clash': 'Clash Meta' };
-        const fileExtensions = { 'base64': '.txt', 'singbox-legacy': '.json', 'singbox-new': '.json', 'clash': '.yaml' };
+        const formatLabels = {
+            'base64': 'Base64',
+            'singbox-legacy': 'Sing-box 1.11.x',
+            'singbox-new': 'Sing-box 1.12.0+',
+            'clash': 'Clash Meta'
+        };
+
+        const fileExtensions = {
+            'base64': '.txt',
+            'singbox-legacy': '.json',
+            'singbox-new': '.json',
+            'clash': '.yaml'
+        };
 
         // Tab switching
-        document.querySelectorAll('.segment-btn').forEach(btn => {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 document.querySelectorAll('.input-group').forEach(g => g.classList.remove('active'));
                 document.getElementById(btn.dataset.tab + '-input').classList.add('active');
@@ -1060,79 +550,72 @@
         });
 
         // Format selection
-        document.querySelectorAll('.format-card').forEach(btn => {
+        document.querySelectorAll('.format-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.format-card').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedFormat = btn.dataset.format;
-                document.getElementById('format-label').textContent = formatLabels[selectedFormat];
+                document.getElementById('format-label').textContent = `(${formatLabels[selectedFormat]})`;
             });
         });
 
-        function decodeBase64Input(input) {
-            if (!input || !input.trim()) return '';
-            const trimmed = input.trim();
-            
-            // Check if it's already decoded (contains protocol links)
-            if (/^(vless|trojan|ss|hysteria2|hy2|vmess|wireguard|wg):\/\//m.test(trimmed)) {
-                return trimmed;
-            }
-            
-            // Try to decode as base64
-            try {
-                // Handle URL-safe base64
-                let base64 = trimmed.replace(/-/g, '+').replace(/_/g, '/');
-                // Add padding if needed
-                while (base64.length % 4) base64 += '=';
-                const decoded = decodeURIComponent(escape(atob(base64)));
-                return decoded;
-            } catch (e) {
-                // If decoding fails, return original (might be plain text)
-                return trimmed;
-            }
-        }
-
         function getAllNodes() {
             const all = document.getElementById('all-nodes').value;
-            const base64Input = document.getElementById('base64-nodes').value;
             const vless = document.getElementById('vless-nodes').value;
             const trojan = document.getElementById('trojan-nodes').value;
             const ss = document.getElementById('ss-nodes').value;
             const hy2 = document.getElementById('hy2-nodes').value;
             const wg = document.getElementById('wg-nodes').value;
-            
-            // Decode base64 input
-            const decodedBase64 = decodeBase64Input(base64Input);
-            
-            return [all, decodedBase64, vless, trojan, ss, hy2, wg].join('\n');
+            return [all, vless, trojan, ss, hy2, wg].join('\n');
         }
 
         function parseNodes(input) {
             const lines = input.split('\n').map(l => l.trim()).filter(Boolean);
             const nodes = { vless: [], trojan: [], ss: [], hy2: [], wg: [] };
-            let currentWgName = '', currentWgConfig = [], inWgConfig = false;
-
+            
+            let currentWgName = '';
+            let currentWgConfig = [];
+            let inWgConfig = false;
+            
             for (let i = 0; i < lines.length; i++) {
                 const line = lines[i];
-                if (line.startsWith('vless://')) nodes.vless.push(parseVless(line));
-                else if (line.startsWith('trojan://')) nodes.trojan.push(parseTrojan(line));
-                else if (line.startsWith('ss://')) nodes.ss.push(parseShadowsocks(line));
-                else if (line.startsWith('hysteria2://') || line.startsWith('hy2://')) nodes.hy2.push(parseHysteria2(line));
-                else if (line.toLowerCase() === '[interface]') {
-                    if (inWgConfig && currentWgConfig.length > 0) nodes.wg.push(parseWireGuard(currentWgConfig.join('\n'), currentWgName));
+                
+                if (line.startsWith('vless://')) {
+                    nodes.vless.push(parseVless(line));
+                } else if (line.startsWith('trojan://')) {
+                    nodes.trojan.push(parseTrojan(line));
+                } else if (line.startsWith('ss://')) {
+                    nodes.ss.push(parseShadowsocks(line));
+                } else if (line.startsWith('hysteria2://') || line.startsWith('hy2://')) {
+                    nodes.hy2.push(parseHysteria2(line));
+                } else if (line.toLowerCase() === '[interface]') {
+                    if (inWgConfig && currentWgConfig.length > 0) {
+                        nodes.wg.push(parseWireGuard(currentWgConfig.join('\n'), currentWgName));
+                    }
                     inWgConfig = true;
                     currentWgConfig = [line];
-                    currentWgName = (i > 0 && !lines[i-1].includes('://') && !lines[i-1].includes('=') && !lines[i-1].startsWith('[')) ? lines[i-1] : 'WireGuard-' + (nodes.wg.length + 1);
+                    if (i > 0 && !lines[i-1].includes('://') && !lines[i-1].includes('=') && !lines[i-1].startsWith('[')) {
+                        currentWgName = lines[i-1];
+                    } else {
+                        currentWgName = 'WireGuard-' + (nodes.wg.length + 1);
+                    }
                 } else if (inWgConfig) {
                     currentWgConfig.push(line);
-                    if (line.toLowerCase().startsWith('endpoint') || i === lines.length - 1 || (i < lines.length - 1 && /^(vless|trojan|ss|hysteria2|hy2):\/\//.test(lines[i+1]))) {
+                    if (line.toLowerCase().startsWith('endpoint') || (i === lines.length - 1) || 
+                        (i < lines.length - 1 && (lines[i+1].startsWith('vless://') || 
+                         lines[i+1].startsWith('trojan://') || lines[i+1].startsWith('ss://') ||
+                         lines[i+1].startsWith('hysteria2://') || lines[i+1].startsWith('hy2://')))) {
                         nodes.wg.push(parseWireGuard(currentWgConfig.join('\n'), currentWgName));
                         inWgConfig = false;
                         currentWgConfig = [];
                     }
                 }
             }
-            if (inWgConfig && currentWgConfig.length > 0) nodes.wg.push(parseWireGuard(currentWgConfig.join('\n'), currentWgName));
+            
+            if (inWgConfig && currentWgConfig.length > 0) {
+                nodes.wg.push(parseWireGuard(currentWgConfig.join('\n'), currentWgName));
+            }
+            
             return nodes;
         }
 
@@ -1140,78 +623,153 @@
             try {
                 const urlObj = new URL(url);
                 const params = urlObj.searchParams;
+                let name = urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'vless-node';
+                
                 return {
-                    type: 'vless', name: urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'vless-node',
-                    server: urlObj.hostname.replace(/^\[|\]$/g, ''), port: parseInt(urlObj.port) || 443, uuid: urlObj.username,
-                    transport: params.get('type') || 'tcp', security: params.get('security') || '', sni: params.get('sni') || urlObj.hostname,
-                    host: params.get('host') || '', path: params.get('path') || '/', serviceName: params.get('serviceName') || params.get('sn') || '',
-                    flow: params.get('flow') || '', fp: params.get('fp') || 'chrome', pbk: params.get('pbk') || '', sid: params.get('sid') || '',
-                    alpn: params.get('alpn') || '', mode: params.get('mode') || '', raw: url
+                    type: 'vless',
+                    name: name,
+                    server: urlObj.hostname.replace(/^\[|\]$/g, ''),
+                    port: parseInt(urlObj.port) || 443,
+                    uuid: urlObj.username,
+                    transport: params.get('type') || 'tcp',
+                    security: params.get('security') || '',
+                    sni: params.get('sni') || urlObj.hostname,
+                    host: params.get('host') || '',
+                    path: params.get('path') || '/',
+                    serviceName: params.get('serviceName') || params.get('sn') || '',
+                    flow: params.get('flow') || '',
+                    fp: params.get('fp') || 'chrome',
+                    pbk: params.get('pbk') || '',
+                    sid: params.get('sid') || '',
+                    alpn: params.get('alpn') || '',
+                    headerType: params.get('headerType') || '',
+                    mode: params.get('mode') || '',
+                    raw: url
                 };
-            } catch (e) { return null; }
+            } catch (e) {
+                return null;
+            }
         }
 
         function parseTrojan(url) {
             try {
                 const urlObj = new URL(url);
                 const params = urlObj.searchParams;
+                let name = urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'trojan-node';
+                
                 return {
-                    type: 'trojan', name: urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'trojan-node',
-                    server: urlObj.hostname.replace(/^\[|\]$/g, ''), port: parseInt(urlObj.port) || 443,
-                    password: decodeURIComponent(urlObj.username), transport: params.get('type') || 'tcp',
-                    sni: params.get('sni') || params.get('peer') || urlObj.hostname, host: params.get('host') || '',
-                    path: params.get('path') || '/', serviceName: params.get('serviceName') || params.get('sn') || '',
-                    fp: params.get('fp') || '', alpn: params.get('alpn') || '', raw: url
+                    type: 'trojan',
+                    name: name,
+                    server: urlObj.hostname.replace(/^\[|\]$/g, ''),
+                    port: parseInt(urlObj.port) || 443,
+                    password: decodeURIComponent(urlObj.username),
+                    transport: params.get('type') || 'tcp',
+                    security: params.get('security') || 'tls',
+                    sni: params.get('sni') || params.get('peer') || urlObj.hostname,
+                    host: params.get('host') || '',
+                    path: params.get('path') || '/',
+                    serviceName: params.get('serviceName') || params.get('sn') || '',
+                    fp: params.get('fp') || '',
+                    alpn: params.get('alpn') || '',
+                    raw: url
                 };
-            } catch (e) { return null; }
+            } catch (e) {
+                return null;
+            }
         }
 
         function parseShadowsocks(url) {
             try {
-                let workingUrl = url, name = 'ss-node';
+                let workingUrl = url;
+                let name = 'ss-node';
+                
                 const hashIndex = workingUrl.indexOf('#');
-                if (hashIndex !== -1) { try { name = decodeURIComponent(workingUrl.substring(hashIndex + 1)); } catch (e) { name = workingUrl.substring(hashIndex + 1); } workingUrl = workingUrl.substring(0, hashIndex); }
+                if (hashIndex !== -1) {
+                    try { name = decodeURIComponent(workingUrl.substring(hashIndex + 1)); } 
+                    catch (e) { name = workingUrl.substring(hashIndex + 1); }
+                    workingUrl = workingUrl.substring(0, hashIndex);
+                }
+                
                 workingUrl = workingUrl.replace(/^ss:\/\//, '');
+                
                 let method, password, server, port;
                 const atIndex = workingUrl.lastIndexOf('@');
+                
                 if (atIndex !== -1) {
-                    const userInfo = workingUrl.substring(0, atIndex), serverPart = workingUrl.substring(atIndex + 1);
-                    let decodedUserInfo; try { decodedUserInfo = atob(userInfo); if (!decodedUserInfo.includes(':')) decodedUserInfo = userInfo; } catch (e) { decodedUserInfo = userInfo; }
+                    const userInfo = workingUrl.substring(0, atIndex);
+                    const serverPart = workingUrl.substring(atIndex + 1);
+                    
+                    let decodedUserInfo;
+                    try {
+                        decodedUserInfo = atob(userInfo);
+                        if (!decodedUserInfo.includes(':')) decodedUserInfo = userInfo;
+                    } catch (e) { decodedUserInfo = userInfo; }
+                    
                     const colonIndex = decodedUserInfo.indexOf(':');
-                    if (colonIndex !== -1) { method = decodedUserInfo.substring(0, colonIndex); password = decodedUserInfo.substring(colonIndex + 1); }
+                    if (colonIndex !== -1) {
+                        method = decodedUserInfo.substring(0, colonIndex);
+                        password = decodedUserInfo.substring(colonIndex + 1);
+                    }
+                    
                     const serverColonIndex = serverPart.lastIndexOf(':');
-                    server = serverPart.substring(0, serverColonIndex); port = parseInt(serverPart.substring(serverColonIndex + 1));
+                    server = serverPart.substring(0, serverColonIndex);
+                    port = parseInt(serverPart.substring(serverColonIndex + 1));
                 } else {
-                    const decoded = atob(workingUrl), atIdx = decoded.lastIndexOf('@');
-                    const userPart = decoded.substring(0, atIdx), serverPart = decoded.substring(atIdx + 1);
-                    const colonIdx = userPart.indexOf(':'); method = userPart.substring(0, colonIdx); password = userPart.substring(colonIdx + 1);
-                    const serverColonIdx = serverPart.lastIndexOf(':'); server = serverPart.substring(0, serverColonIdx); port = parseInt(serverPart.substring(serverColonIdx + 1));
+                    const decoded = atob(workingUrl);
+                    const atIdx = decoded.lastIndexOf('@');
+                    const userPart = decoded.substring(0, atIdx);
+                    const serverPart = decoded.substring(atIdx + 1);
+                    
+                    const colonIdx = userPart.indexOf(':');
+                    method = userPart.substring(0, colonIdx);
+                    password = userPart.substring(colonIdx + 1);
+                    
+                    const serverColonIdx = serverPart.lastIndexOf(':');
+                    server = serverPart.substring(0, serverColonIdx);
+                    port = parseInt(serverPart.substring(serverColonIdx + 1));
                 }
+                
                 return { type: 'ss', name, server, port, method, password, raw: url };
             } catch (e) { return null; }
         }
 
         function parseHysteria2(url) {
             try {
-                const normalizedUrl = url.replace(/^hy2:\/\//, 'hysteria2://'), urlObj = new URL(normalizedUrl), params = urlObj.searchParams;
+                const normalizedUrl = url.replace(/^hy2:\/\//, 'hysteria2://');
+                const urlObj = new URL(normalizedUrl);
+                const params = urlObj.searchParams;
+                let name = urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'hy2-node';
+                let password = decodeURIComponent(urlObj.username || params.get('password') || '');
+                
                 return {
-                    type: 'hy2', name: urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'hy2-node',
-                    server: urlObj.hostname.replace(/^\[|\]$/g, ''), port: parseInt(urlObj.port) || 443,
-                    password: decodeURIComponent(urlObj.username || params.get('password') || ''),
-                    sni: params.get('sni') || urlObj.hostname, obfs: params.get('obfs') || '', obfsPassword: params.get('obfs-password') || '', raw: url
+                    type: 'hy2',
+                    name: name,
+                    server: urlObj.hostname.replace(/^\[|\]$/g, ''),
+                    port: parseInt(urlObj.port) || 443,
+                    password: password,
+                    sni: params.get('sni') || urlObj.hostname,
+                    obfs: params.get('obfs') || '',
+                    obfsPassword: params.get('obfs-password') || '',
+                    raw: url
                 };
             } catch (e) { return null; }
         }
 
         function parseWireGuard(configText, name) {
             try {
-                const config = { interface: {}, peer: {} }; let currentSection = null;
+                const config = { interface: {}, peer: {} };
+                let currentSection = null;
+                
                 for (const line of configText.split('\n')) {
                     const trimmed = line.trim();
                     if (trimmed.toLowerCase() === '[interface]') { currentSection = 'interface'; continue; }
                     if (trimmed.toLowerCase() === '[peer]') { currentSection = 'peer'; continue; }
+                    
                     if (currentSection && trimmed.includes('=')) {
-                        const eqIdx = trimmed.indexOf('='), key = trimmed.substring(0, eqIdx).trim().toLowerCase(), value = trimmed.substring(eqIdx + 1).trim();
+                        const eqIdx = trimmed.indexOf('=');
+                        const key = trimmed.substring(0, eqIdx).trim().toLowerCase();
+                        const value = trimmed.substring(eqIdx + 1).trim();
+                        
                         if (currentSection === 'interface') {
                             if (key === 'privatekey') config.interface.privateKey = value;
                             else if (key === 'address') config.interface.address = value.split(',').map(a => a.trim());
@@ -1227,14 +785,26 @@
                         }
                     }
                 }
+                
                 if (!config.peer.endpoint || !config.interface.privateKey || !config.peer.publicKey) return null;
+                
                 const endpointParts = config.peer.endpoint.match(/^(?:\[([^\]]+)\]|([^:]+)):(\d+)$/);
                 if (!endpointParts) return null;
+                
                 return {
-                    type: 'wg', name: name || 'wireguard-node', server: endpointParts[1] || endpointParts[2], port: parseInt(endpointParts[3]),
-                    privateKey: config.interface.privateKey, publicKey: config.peer.publicKey, address: config.interface.address || ['10.0.0.2/32'],
-                    dns: config.interface.dns || [], mtu: config.interface.mtu || 1280, reserved: config.interface.reserved || [],
-                    allowedIPs: config.peer.allowedIPs || ['0.0.0.0/0', '::/0'], preSharedKey: config.peer.preSharedKey || '', persistentKeepalive: config.peer.persistentKeepalive || 0
+                    type: 'wg',
+                    name: name || 'wireguard-node',
+                    server: endpointParts[1] || endpointParts[2],
+                    port: parseInt(endpointParts[3]),
+                    privateKey: config.interface.privateKey,
+                    publicKey: config.peer.publicKey,
+                    address: config.interface.address || ['10.0.0.2/32'],
+                    dns: config.interface.dns || [],
+                    mtu: config.interface.mtu || 1280,
+                    reserved: config.interface.reserved || [],
+                    allowedIPs: config.peer.allowedIPs || ['0.0.0.0/0', '::/0'],
+                    preSharedKey: config.peer.preSharedKey || '',
+                    persistentKeepalive: config.peer.persistentKeepalive || 0
                 };
             } catch (e) { return null; }
         }
@@ -1257,21 +827,41 @@
         }
 
         function generateSingboxLegacy(nodes) {
-            const proxyOutbounds = [], wireguardEndpoints = [];
+            const proxyOutbounds = [];
+            const wireguardEndpoints = [];
+            
+            // Parse all nodes
             nodes.vless.filter(Boolean).forEach(n => proxyOutbounds.push(buildVlessSingbox(n)));
             nodes.trojan.filter(Boolean).forEach(n => proxyOutbounds.push(buildTrojanSingbox(n)));
             nodes.ss.filter(Boolean).forEach(n => proxyOutbounds.push(buildSSSingbox(n)));
             nodes.hy2.filter(Boolean).forEach(n => proxyOutbounds.push(buildHy2Singbox(n)));
             nodes.wg.filter(Boolean).forEach(n => wireguardEndpoints.push(buildWGSingbox(n)));
+            
             const proxyTags = [...proxyOutbounds.map(o => o.tag), ...wireguardEndpoints.map(e => e.tag)];
-
+            
             const config = {
                 "log": { "disabled": true, "level": "info" },
                 "dns": {
                     "servers": [
-                        { "tag": "primary-dns", "address": "https://cloudflare-dns.com/dns-query", "address_resolver": "bootstrap-dns", "strategy": "prefer_ipv4", "detour": "🚀 Proxy" },
-                        { "tag": "bootstrap-dns", "address": "8.8.8.8", "strategy": "prefer_ipv4", "detour": "direct" },
-                        { "tag": "direct-dns", "address": "1.1.1.1", "strategy": "prefer_ipv4", "detour": "direct" },
+                        {
+                            "tag": "primary-dns",
+                            "address": "https://cloudflare-dns.com/dns-query",
+                            "address_resolver": "bootstrap-dns",
+                            "strategy": "prefer_ipv4",
+                            "detour": "🩺 Proxy"
+                        },
+                        {
+                            "tag": "bootstrap-dns",
+                            "address": "8.8.8.8",
+                            "strategy": "prefer_ipv4",
+                            "detour": "direct"
+                        },
+                        {
+                            "tag": "direct-dns",
+                            "address": "1.1.1.1",
+                            "strategy": "prefer_ipv4",
+                            "detour": "direct"
+                        },
                         { "tag": "fake-dns", "address": "fakeip" }
                     ],
                     "rules": [
@@ -1280,13 +870,21 @@
                         { "inbound": "tun-in", "query_type": ["A", "AAAA"], "server": "fake-dns", "disable_cache": true }
                     ],
                     "fakeip": { "enabled": true, "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" },
-                    "reverse_mapping": true, "strategy": "prefer_ipv4", "independent_cache": true
+                    "reverse_mapping": true,
+                    "strategy": "prefer_ipv4",
+                    "independent_cache": true
                 },
                 "inbounds": [
                     { "type": "direct", "tag": "dns-in-udp", "listen": "127.0.0.1", "listen_port": 8853, "network": "udp" },
                     { "type": "direct", "tag": "dns-in-tcp", "listen": "127.0.0.1", "listen_port": 8854, "network": "tcp" },
                     { "type": "mixed", "tag": "mixed-in", "listen": "0.0.0.0", "listen_port": 2080 },
-                    { "type": "tun", "tag": "tun-in", "mtu": 9000, "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"], "auto_route": true, "strict_route": true, "route_exclude_address": ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "fc00::/7"], "stack": "mixed", "endpoint_independent_nat": true }
+                    {
+                        "type": "tun", "tag": "tun-in", "mtu": 9000,
+                        "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
+                        "auto_route": true, "strict_route": true,
+                        "route_exclude_address": ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "fc00::/7"],
+                        "stack": "mixed", "endpoint_independent_nat": true
+                    }
                 ],
                 "outbounds": [],
                 "route": {
@@ -1306,32 +904,67 @@
                 },
                 "experimental": { "cache_file": { "enabled": true, "store_fakeip": true } }
             };
-
+            
+            // Build outbounds
             config.outbounds.push({ "type": "direct", "tag": "direct" });
+            
             if (proxyTags.length > 0) {
                 const selectorOutbounds = proxyTags.length > 1 ? ["⚡ Auto Select", ...proxyTags] : [...proxyTags];
-                config.outbounds.unshift({ "type": "selector", "tag": "🚀 Proxy", "outbounds": selectorOutbounds, "default": selectorOutbounds[0], "interrupt_exist_connections": false });
-                if (proxyTags.length > 1) config.outbounds.push({ "type": "urltest", "tag": "⚡ Auto Select", "outbounds": [...proxyTags], "url": "https://www.gstatic.com/generate_204", "interval": "3m", "tolerance": 50, "idle_timeout": "30m", "interrupt_exist_connections": false });
+                config.outbounds.unshift({
+                    "type": "selector",
+                    "tag": "🩺 Proxy",
+                    "outbounds": selectorOutbounds,
+                    "default": selectorOutbounds[0],
+                    "interrupt_exist_connections": false
+                });
+                
+                if (proxyTags.length > 1) {
+                    config.outbounds.push({
+                        "type": "urltest",
+                        "tag": "⚡ Auto Select",
+                        "outbounds": [...proxyTags],
+                        "url": "https://www.gstatic.com/generate_204",
+                        "interval": "3m",
+                        "tolerance": 50,
+                        "idle_timeout": "30m",
+                        "interrupt_exist_connections": false
+                    });
+                }
             }
+            
             config.outbounds.push(...proxyOutbounds);
-            if (wireguardEndpoints.length > 0) config.endpoints = wireguardEndpoints;
+            
+            if (wireguardEndpoints.length > 0) {
+                config.endpoints = wireguardEndpoints;
+            }
+            
             return JSON.stringify(config, null, 2);
         }
 
         function generateSingboxNew(nodes) {
-            const proxyOutbounds = [], wireguardEndpoints = [];
+            const proxyOutbounds = [];
+            const wireguardEndpoints = [];
+            
             nodes.vless.filter(Boolean).forEach(n => proxyOutbounds.push(buildVlessSingbox(n)));
             nodes.trojan.filter(Boolean).forEach(n => proxyOutbounds.push(buildTrojanSingbox(n)));
             nodes.ss.filter(Boolean).forEach(n => proxyOutbounds.push(buildSSSingbox(n)));
             nodes.hy2.filter(Boolean).forEach(n => proxyOutbounds.push(buildHy2Singbox(n)));
             nodes.wg.filter(Boolean).forEach(n => wireguardEndpoints.push(buildWGSingbox(n)));
+            
             const proxyTags = [...proxyOutbounds.map(o => o.tag), ...wireguardEndpoints.map(e => e.tag)];
-
+            
             const config = {
                 "log": { "disabled": true, "level": "info" },
                 "dns": {
                     "servers": [
-                        { "type": "https", "tag": "primary-dns", "server": "cloudflare-dns.com", "server_port": 443, "path": "/dns-query", "detour": "🚀 Proxy" },
+                        {
+                            "type": "https",
+                            "tag": "primary-dns",
+                            "server": "cloudflare-dns.com",
+                            "server_port": 443,
+                            "path": "/dns-query",
+                            "detour": "🩺 Proxy"
+                        },
                         { "type": "udp", "tag": "bootstrap-dns", "server": "8.8.8.8", "server_port": 53 },
                         { "type": "udp", "tag": "direct-dns", "server": "1.1.1.1", "server_port": 53 },
                         { "type": "fakeip", "tag": "fake-dns", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
@@ -1340,13 +973,20 @@
                         { "domain_suffix": [".cn", ".xn--fiqs8s", ".xn--fiqz9s"], "action": "route", "server": "direct-dns", "rewrite_ttl": 300 },
                         { "inbound": "tun-in", "query_type": ["A", "AAAA"], "action": "route", "server": "fake-dns" }
                     ],
-                    "strategy": "prefer_ipv4", "independent_cache": true
+                    "strategy": "prefer_ipv4",
+                    "independent_cache": true
                 },
                 "inbounds": [
                     { "type": "direct", "tag": "dns-in-udp", "listen": "127.0.0.1", "listen_port": 8853, "network": "udp" },
                     { "type": "direct", "tag": "dns-in-tcp", "listen": "127.0.0.1", "listen_port": 8854, "network": "tcp" },
                     { "type": "mixed", "tag": "mixed-in", "listen": "0.0.0.0", "listen_port": 2080 },
-                    { "type": "tun", "tag": "tun-in", "mtu": 9000, "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"], "auto_route": true, "strict_route": true, "route_exclude_address": ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "fc00::/7"], "stack": "mixed", "endpoint_independent_nat": true }
+                    {
+                        "type": "tun", "tag": "tun-in", "mtu": 9000,
+                        "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
+                        "auto_route": true, "strict_route": true,
+                        "route_exclude_address": ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "fc00::/7"],
+                        "stack": "mixed", "endpoint_independent_nat": true
+                    }
                 ],
                 "outbounds": [],
                 "route": {
@@ -1367,138 +1007,572 @@
                 },
                 "experimental": { "cache_file": { "enabled": true, "store_fakeip": true } }
             };
-
+            
             config.outbounds.push({ "type": "direct", "tag": "direct" });
+            
             if (proxyTags.length > 0) {
                 const selectorOutbounds = proxyTags.length > 1 ? ["⚡ Auto Select", ...proxyTags] : [...proxyTags];
-                config.outbounds.unshift({ "type": "selector", "tag": "🚀 Proxy", "outbounds": selectorOutbounds, "default": selectorOutbounds[0], "interrupt_exist_connections": false });
-                if (proxyTags.length > 1) config.outbounds.push({ "type": "urltest", "tag": "⚡ Auto Select", "outbounds": [...proxyTags], "url": "https://www.gstatic.com/generate_204", "interval": "3m", "tolerance": 50, "idle_timeout": "30m", "interrupt_exist_connections": false });
+                config.outbounds.unshift({
+                    "type": "selector",
+                    "tag": "🩺 Proxy",
+                    "outbounds": selectorOutbounds,
+                    "default": selectorOutbounds[0],
+                    "interrupt_exist_connections": false
+                });
+                
+                if (proxyTags.length > 1) {
+                    config.outbounds.push({
+                        "type": "urltest",
+                        "tag": "⚡ Auto Select",
+                        "outbounds": [...proxyTags],
+                        "url": "https://www.gstatic.com/generate_204",
+                        "interval": "3m",
+                        "tolerance": 50,
+                        "idle_timeout": "30m",
+                        "interrupt_exist_connections": false
+                    });
+                }
             }
+            
             config.outbounds.push(...proxyOutbounds);
-            if (wireguardEndpoints.length > 0) config.endpoints = wireguardEndpoints;
+            
+            if (wireguardEndpoints.length > 0) {
+                config.endpoints = wireguardEndpoints;
+            }
+            
             return JSON.stringify(config, null, 2);
         }
 
         function buildVlessSingbox(n) {
-            const outbound = { "type": "vless", "tag": n.name, "server": n.server, "server_port": n.port, "uuid": n.uuid, "tcp_fast_open": true, "tcp_multi_path": true };
+            const outbound = {
+                "type": "vless",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "uuid": n.uuid,
+                "tcp_fast_open": true,
+                "tcp_multi_path": true
+            };
+            
             if (n.security === 'tls' || n.security === 'reality') {
-                outbound.tls = { "enabled": true, "insecure": false, "server_name": n.sni, "min_version": "1.2", "utls": { "enabled": true, "fingerprint": n.fp || "randomized" } };
+                outbound.tls = {
+                    "enabled": true,
+                    "insecure": false,
+                    "server_name": n.sni,
+                    "min_version": "1.2",
+                    "utls": { "enabled": true, "fingerprint": n.fp || "randomized" }
+                };
                 if (n.alpn) outbound.tls.alpn = n.alpn.split(',').map(a => a.trim());
-                if (n.security === 'reality') outbound.tls.reality = { "enabled": true, "public_key": n.pbk, "short_id": n.sid };
+                if (n.security === 'reality') {
+                    outbound.tls.reality = { "enabled": true, "public_key": n.pbk, "short_id": n.sid };
+                }
             }
-            if (n.transport === 'ws') { outbound.transport = { "type": "ws", "path": n.path, "headers": { "Host": n.host || n.sni } }; const edMatch = n.path.match(/[?&]ed=(\d+)/i); if (edMatch) { outbound.transport.max_early_data = parseInt(edMatch[1]); outbound.transport.early_data_header_name = "Sec-WebSocket-Protocol"; } }
-            else if (n.transport === 'grpc') outbound.transport = { "type": "grpc", "service_name": n.serviceName };
-            else if (n.transport === 'http' || n.transport === 'xhttp') { outbound.transport = { "type": "http", "path": n.path, "headers": { "Host": n.host || n.sni } }; if (n.mode) outbound.transport.method = n.mode.toUpperCase(); }
+            
+            if (n.transport === 'ws') {
+                outbound.transport = {
+                    "type": "ws",
+                    "path": n.path,
+                    "headers": { "Host": n.host || n.sni }
+                };
+                const edMatch = n.path.match(/[?&]ed=(\d+)/i);
+                if (edMatch) {
+                    outbound.transport.max_early_data = parseInt(edMatch[1]);
+                    outbound.transport.early_data_header_name = "Sec-WebSocket-Protocol";
+                }
+            } else if (n.transport === 'grpc') {
+                outbound.transport = { "type": "grpc", "service_name": n.serviceName };
+            } else if (n.transport === 'http' || n.transport === 'xhttp') {
+                outbound.transport = {
+                    "type": "http",
+                    "path": n.path,
+                    "headers": { "Host": n.host || n.sni }
+                };
+                if (n.mode) outbound.transport.method = n.mode.toUpperCase();
+            }
+            
             if (n.flow && n.transport === 'tcp') outbound.flow = n.flow;
+            
             return outbound;
         }
 
         function buildTrojanSingbox(n) {
-            const outbound = { "type": "trojan", "tag": n.name, "server": n.server, "server_port": n.port, "password": n.password, "tcp_fast_open": true, "tcp_multi_path": true, "tls": { "enabled": true, "insecure": false, "server_name": n.sni, "min_version": "1.2", "utls": { "enabled": true, "fingerprint": n.fp || "randomized" } } };
+            const outbound = {
+                "type": "trojan",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "password": n.password,
+                "tcp_fast_open": true,
+                "tcp_multi_path": true,
+                "tls": {
+                    "enabled": true,
+                    "insecure": false,
+                    "server_name": n.sni,
+                    "min_version": "1.2",
+                    "utls": { "enabled": true, "fingerprint": n.fp || "randomized" }
+                }
+            };
+            
             if (n.alpn) outbound.tls.alpn = n.alpn.split(',').map(a => a.trim());
-            if (n.transport === 'ws') outbound.transport = { "type": "ws", "path": n.path, "headers": { "Host": n.host || n.sni } };
-            else if (n.transport === 'grpc') outbound.transport = { "type": "grpc", "service_name": n.serviceName };
+            
+            if (n.transport === 'ws') {
+                outbound.transport = {
+                    "type": "ws",
+                    "path": n.path,
+                    "headers": { "Host": n.host || n.sni }
+                };
+            } else if (n.transport === 'grpc') {
+                outbound.transport = { "type": "grpc", "service_name": n.serviceName };
+            }
+            
             return outbound;
         }
 
-        function buildSSSingbox(n) { return { "type": "shadowsocks", "tag": n.name, "server": n.server, "server_port": n.port, "method": n.method, "password": n.password, "udp_over_tcp": { "enabled": true, "version": 2 } }; }
+        function buildSSSingbox(n) {
+            return {
+                "type": "shadowsocks",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "method": n.method,
+                "password": n.password,
+                "udp_over_tcp": { "enabled": true, "version": 2 }
+            };
+        }
 
         function buildHy2Singbox(n) {
-            const outbound = { "type": "hysteria2", "tag": n.name, "server": n.server, "server_port": n.port, "password": n.password, "tls": { "enabled": true, "insecure": false, "server_name": n.sni, "alpn": ["h3"], "min_version": "1.2" }, "tcp_fast_open": true, "tcp_multi_path": true, "up_mbps": 100, "down_mbps": 2000 };
-            if (n.obfs && n.obfs !== 'none') outbound.obfs = { "type": n.obfs, "password": n.obfsPassword };
+            const outbound = {
+                "type": "hysteria2",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "password": n.password,
+                "tls": {
+                    "enabled": true,
+                    "insecure": false,
+                    "server_name": n.sni,
+                    "alpn": ["h3"],
+                    "min_version": "1.2"
+                },
+                "tcp_fast_open": true,
+                "tcp_multi_path": true,
+                "up_mbps": 100,
+                "down_mbps": 2000
+            };
+            
+            if (n.obfs && n.obfs !== 'none') {
+                outbound.obfs = { "type": n.obfs, "password": n.obfsPassword };
+            }
+            
             return outbound;
         }
 
         function buildWGSingbox(n) {
-            const peer = { "address": n.server, "port": n.port, "public_key": n.publicKey, "allowed_ips": n.allowedIPs || ["0.0.0.0/0", "::/0"] };
+            const peer = {
+                "address": n.server,
+                "port": n.port,
+                "public_key": n.publicKey,
+                "allowed_ips": n.allowedIPs || ["0.0.0.0/0", "::/0"]
+            };
+            
             if (n.preSharedKey) peer.pre_shared_key = n.preSharedKey;
             if (n.persistentKeepalive > 0) peer.persistent_keepalive_interval = n.persistentKeepalive;
             if (n.reserved && n.reserved.length === 3) peer.reserved = n.reserved;
-            return { "type": "wireguard", "tag": n.name, "mtu": n.mtu || 1280, "address": n.address || ["10.0.0.2/32"], "private_key": n.privateKey, "peers": [peer] };
+            
+            return {
+                "type": "wireguard",
+                "tag": n.name,
+                "mtu": n.mtu || 1280,
+                "address": n.address || ["10.0.0.2/32"],
+                "private_key": n.privateKey,
+                "peers": [peer]
+            };
         }
 
         function generateClash(nodes) {
-            const proxies = [], proxyNames = [];
-            nodes.vless.filter(Boolean).forEach(n => { proxies.push(buildVlessClash(n)); proxyNames.push(n.name); });
-            nodes.trojan.filter(Boolean).forEach(n => { proxies.push(buildTrojanClash(n)); proxyNames.push(n.name); });
-            nodes.ss.filter(Boolean).forEach(n => { proxies.push(buildSSClash(n)); proxyNames.push(n.name); });
-            nodes.hy2.filter(Boolean).forEach(n => { proxies.push(buildHy2Clash(n)); proxyNames.push(n.name); });
-            nodes.wg.filter(Boolean).forEach(n => { proxies.push(buildWGClash(n)); proxyNames.push(n.name); });
+            const proxies = [];
+            const proxyNames = [];
+            
+            nodes.vless.filter(Boolean).forEach(n => {
+                proxies.push(buildVlessClash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.trojan.filter(Boolean).forEach(n => {
+                proxies.push(buildTrojanClash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.ss.filter(Boolean).forEach(n => {
+                proxies.push(buildSSClash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.hy2.filter(Boolean).forEach(n => {
+                proxies.push(buildHy2Clash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.wg.filter(Boolean).forEach(n => {
+                proxies.push(buildWGClash(n));
+                proxyNames.push(n.name);
+            });
+            
+            let yaml = `# ═══════════════════════════════════════════════════════════════════
+# Clash Meta (Mihomo) Configuration
+# Generated by Subscription Converter
+# ═══════════════════════════════════════════════════════════════════
 
-            let yaml = `# Clash Meta (Mihomo) Configuration\n# Generated by Subscription Converter\n\nmixed-port: 7890\nsocks-port: 7891\nport: 7892\nallow-lan: true\nbind-address: "*"\nmode: rule\nlog-level: info\nipv6: true\nexternal-controller: 127.0.0.1:9090\nexternal-ui: ui\nexternal-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"\nunified-delay: true\ntcp-concurrent: true\ngeodata-mode: true\ngeodata-loader: standard\ngeo-auto-update: true\ngeo-update-interval: 24\nfind-process-mode: strict\nglobal-client-fingerprint: chrome\n\nprofile:\n  store-selected: true\n  store-fake-ip: true\n\nsniffer:\n  enable: true\n  force-dns-mapping: true\n  parse-pure-ip: true\n  override-destination: true\n  sniff:\n    HTTP:\n      ports: [80, "8080-8880"]\n      override-destination: true\n    TLS:\n      ports: [443, 8443]\n    QUIC:\n      ports: [443, 8443]\n\ntun:\n  enable: true\n  stack: mixed\n  dns-hijack: ["any:53", "tcp://any:53"]\n  auto-route: true\n  auto-detect-interface: true\n  strict-route: true\n  mtu: 9000\n\ndns:\n  enable: true\n  listen: 0.0.0.0:1053\n  ipv6: true\n  prefer-h3: true\n  enhanced-mode: fake-ip\n  fake-ip-range: 198.18.0.1/16\n  fake-ip-filter:\n    - "*"\n    - "+.lan"\n    - "+.local"\n    - "time.*.com"\n    - "ntp.*.com"\n    - "+.pool.ntp.org"\n    - "stun.*.*"\n  default-nameserver: [223.5.5.5, 119.29.29.29, 1.1.1.1, 8.8.8.8]\n  nameserver: ["https://dns.cloudflare.com/dns-query", "https://dns.google/dns-query"]\n  fallback: ["https://1.1.1.1/dns-query", "https://8.8.8.8/dns-query", "tls://dns.google:853"]\n  fallback-filter:\n    geoip: true\n    geoip-code: CN\n    geosite: [gfw]\n    ipcidr: [240.0.0.0/4]\n    domain: ["+.google.com", "+.facebook.com", "+.youtube.com"]\n\nproxies:\n`;
+mixed-port: 7890
+socks-port: 7891
+port: 7892
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+unified-delay: true
+tcp-concurrent: true
+geodata-mode: true
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  mtu: 9000
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  prefer-h3: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.localhost"
+    - "+.test"
+    - "+.invalid"
+    - "+.home.arpa"
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.edu.cn"
+    - "time.*.apple.com"
+    - "time-ios.apple.com"
+    - "ntp.*.com"
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - "+.pool.ntp.org"
+    - "music.163.com"
+    - "*.music.163.com"
+    - "*.126.net"
+    - "y.qq.com"
+    - "*.y.qq.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.qq.com"
+    - "+.tencent.com"
+    - "stun.*.*"
+    - "stun.*.*.*"
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "lens.l.google.com"
+    - "stun.l.google.com"
+    - "+.nflxvideo.net"
+    - "*.mcdn.bilivideo.cn"
+    - "+.media.dssott.com"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 1.1.1.1
+    - 8.8.8.8
+  nameserver:
+    - "https://dns.cloudflare.com/dns-query"
+    - "https://dns.google/dns-query"
+  fallback:
+    - "https://1.1.1.1/dns-query"
+    - "https://8.8.8.8/dns-query"
+    - "tls://dns.google:853"
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    ipcidr:
+      - 240.0.0.0/4
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+
+proxies:
+`;
+            
             proxies.forEach(p => { yaml += p; });
-            yaml += `\nproxy-groups:\n  - name: "🚀 Proxy"\n    type: select\n    proxies:\n`;
-            if (proxyNames.length > 1) yaml += `      - "⚡ Auto Select"\n      - "🔄 Fallback"\n`;
+            
+            yaml += `
+proxy-groups:
+  - name: "🩺 Proxy"
+    type: select
+    proxies:
+`;
+            if (proxyNames.length > 1) yaml += `      - "⚡ Auto Select"\n`;
+            if (proxyNames.length > 1) yaml += `      - "🔄 Fallback"\n`;
             proxyNames.forEach(name => yaml += `      - "${name}"\n`);
             yaml += `      - DIRECT\n`;
+            
             if (proxyNames.length > 1) {
-                yaml += `\n  - name: "⚡ Auto Select"\n    type: url-test\n    proxies:\n`;
+                yaml += `
+  - name: "⚡ Auto Select"
+    type: url-test
+    proxies:
+`;
                 proxyNames.forEach(name => yaml += `      - "${name}"\n`);
-                yaml += `    url: "https://www.gstatic.com/generate_204"\n    interval: 180\n    tolerance: 50\n    lazy: true\n\n  - name: "🔄 Fallback"\n    type: fallback\n    proxies:\n`;
+                yaml += `    url: "https://www.gstatic.com/generate_204"
+    interval: 180
+    tolerance: 50
+    lazy: true
+
+  - name: "🔄 Fallback"
+    type: fallback
+    proxies:
+`;
                 proxyNames.forEach(name => yaml += `      - "${name}"\n`);
-                yaml += `    url: "https://www.gstatic.com/generate_204"\n    interval: 180\n`;
+                yaml += `    url: "https://www.gstatic.com/generate_204"
+    interval: 180
+`;
             }
-            yaml += `\nrules:\n  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve\n  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve\n  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve\n  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve\n  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve\n  - IP-CIDR,224.0.0.0/4,DIRECT,no-resolve\n  - IP-CIDR,fe80::/10,DIRECT,no-resolve\n  - IP-CIDR,fc00::/7,DIRECT,no-resolve\n  - IP-CIDR,::1/128,DIRECT,no-resolve\n  - DOMAIN-SUFFIX,cn,DIRECT\n  - GEOIP,CN,DIRECT,no-resolve\n  - MATCH,🚀 Proxy\n`;
+            
+            yaml += `
+rules:
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+  - IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+  - IP-CIDR,fe80::/10,DIRECT,no-resolve
+  - IP-CIDR,fc00::/7,DIRECT,no-resolve
+  - IP-CIDR,::1/128,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,cn,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
+  - MATCH,🩺 Proxy
+`;
+            
             return yaml;
         }
 
         function buildVlessClash(n) {
-            let yaml = `  - name: "${n.name}"\n    type: vless\n    server: ${n.server}\n    port: ${n.port}\n    uuid: ${n.uuid}\n    udp: true\n    tfo: true\n`;
-            if (n.security === 'tls') { yaml += `    tls: true\n    servername: ${n.sni}\n    skip-cert-verify: false\n`; if (n.alpn) yaml += `    alpn:\n${n.alpn.split(',').map(a => `      - ${a.trim()}`).join('\n')}\n`; if (n.fp) yaml += `    client-fingerprint: ${n.fp}\n`; }
-            else if (n.security === 'reality') yaml += `    tls: true\n    servername: ${n.sni}\n    skip-cert-verify: false\n    reality-opts:\n      public-key: ${n.pbk}\n      short-id: ${n.sid}\n    client-fingerprint: ${n.fp || 'chrome'}\n`;
+            let yaml = `  - name: "${n.name}"
+    type: vless
+    server: ${n.server}
+    port: ${n.port}
+    uuid: ${n.uuid}
+    udp: true
+    tfo: true
+`;
+            
+            if (n.security === 'tls') {
+                yaml += `    tls: true
+    servername: ${n.sni}
+    skip-cert-verify: false
+`;
+                if (n.alpn) yaml += `    alpn:\n${n.alpn.split(',').map(a => `      - ${a.trim()}`).join('\n')}\n`;
+                if (n.fp) yaml += `    client-fingerprint: ${n.fp}\n`;
+            } else if (n.security === 'reality') {
+                yaml += `    tls: true
+    servername: ${n.sni}
+    skip-cert-verify: false
+    reality-opts:
+      public-key: ${n.pbk}
+      short-id: ${n.sid}
+    client-fingerprint: ${n.fp || 'chrome'}
+`;
+            }
+            
             if (n.flow) yaml += `    flow: ${n.flow}\n`;
-            if (n.transport === 'ws') yaml += `    network: ws\n    ws-opts:\n      path: ${n.path}\n      headers:\n        Host: ${n.host || n.sni}\n`;
-            else if (n.transport === 'grpc') yaml += `    network: grpc\n    grpc-opts:\n      grpc-service-name: "${n.serviceName}"\n`;
-            else if (n.transport === 'http' || n.transport === 'xhttp') yaml += `    network: http\n    http-opts:\n      path:\n        - ${n.path}\n      headers:\n        Host:\n          - ${n.host || n.sni}\n`;
+            
+            if (n.transport === 'ws') {
+                yaml += `    network: ws
+    ws-opts:
+      path: ${n.path}
+      headers:
+        Host: ${n.host || n.sni}
+`;
+            } else if (n.transport === 'grpc') {
+                yaml += `    network: grpc
+    grpc-opts:
+      grpc-service-name: "${n.serviceName}"
+`;
+            } else if (n.transport === 'http' || n.transport === 'xhttp') {
+                yaml += `    network: http
+    http-opts:
+      path:
+        - ${n.path}
+      headers:
+        Host:
+          - ${n.host || n.sni}
+`;
+            }
+            
             return yaml + '\n';
         }
 
         function buildTrojanClash(n) {
-            let yaml = `  - name: "${n.name}"\n    type: trojan\n    server: ${n.server}\n    port: ${n.port}\n    password: ${n.password}\n    udp: true\n    tfo: true\n    sni: ${n.sni}\n    skip-cert-verify: false\n`;
+            let yaml = `  - name: "${n.name}"
+    type: trojan
+    server: ${n.server}
+    port: ${n.port}
+    password: ${n.password}
+    udp: true
+    tfo: true
+    sni: ${n.sni}
+    skip-cert-verify: false
+`;
+            
             if (n.alpn) yaml += `    alpn:\n${n.alpn.split(',').map(a => `      - ${a.trim()}`).join('\n')}\n`;
             if (n.fp) yaml += `    client-fingerprint: ${n.fp}\n`;
-            if (n.transport === 'ws') yaml += `    network: ws\n    ws-opts:\n      path: ${n.path}\n      headers:\n        Host: ${n.host || n.sni}\n`;
-            else if (n.transport === 'grpc') yaml += `    network: grpc\n    grpc-opts:\n      grpc-service-name: "${n.serviceName}"\n`;
+            
+            if (n.transport === 'ws') {
+                yaml += `    network: ws
+    ws-opts:
+      path: ${n.path}
+      headers:
+        Host: ${n.host || n.sni}
+`;
+            } else if (n.transport === 'grpc') {
+                yaml += `    network: grpc
+    grpc-opts:
+      grpc-service-name: "${n.serviceName}"
+`;
+            }
+            
             return yaml + '\n';
         }
 
-        function buildSSClash(n) { return `  - name: "${n.name}"\n    type: ss\n    server: ${n.server}\n    port: ${n.port}\n    cipher: ${n.method}\n    password: ${n.password}\n    udp: true\n    udp-over-tcp: true\n\n`; }
+        function buildSSClash(n) {
+            return `  - name: "${n.name}"
+    type: ss
+    server: ${n.server}
+    port: ${n.port}
+    cipher: ${n.method}
+    password: ${n.password}
+    udp: true
+    udp-over-tcp: true
+
+`;
+        }
 
         function buildHy2Clash(n) {
-            let yaml = `  - name: "${n.name}"\n    type: hysteria2\n    server: ${n.server}\n    port: ${n.port}\n    password: ${n.password}\n    sni: ${n.sni}\n    skip-cert-verify: false\n    alpn:\n      - h3\n`;
-            if (n.obfs && n.obfs !== 'none') yaml += `    obfs: ${n.obfs}\n    obfs-password: ${n.obfsPassword}\n`;
+            let yaml = `  - name: "${n.name}"
+    type: hysteria2
+    server: ${n.server}
+    port: ${n.port}
+    password: ${n.password}
+    sni: ${n.sni}
+    skip-cert-verify: false
+    alpn:
+      - h3
+`;
+            
+            if (n.obfs && n.obfs !== 'none') {
+                yaml += `    obfs: ${n.obfs}
+    obfs-password: ${n.obfsPassword}
+`;
+            }
+            
             return yaml + '\n';
         }
 
         function buildWGClash(n) {
-            let yaml = `  - name: "${n.name}"\n    type: wireguard\n    server: ${n.server}\n    port: ${n.port}\n    private-key: ${n.privateKey}\n    public-key: ${n.publicKey}\n    udp: true\n`;
+            let yaml = `  - name: "${n.name}"
+    type: wireguard
+    server: ${n.server}
+    port: ${n.port}
+    private-key: ${n.privateKey}
+    public-key: ${n.publicKey}
+    udp: true
+`;
+            
             if (n.address && n.address[0]) yaml += `    ip: ${n.address[0].split('/')[0]}\n`;
             if (n.mtu) yaml += `    mtu: ${n.mtu}\n`;
             if (n.reserved && n.reserved.length === 3) yaml += `    reserved: [${n.reserved.join(', ')}]\n`;
             if (n.dns && n.dns.length > 0) yaml += `    dns:\n${n.dns.map(d => `      - ${d}`).join('\n')}\n`;
+            
             return yaml + '\n';
         }
 
         function convertNodes() {
             const input = getAllNodes();
             const nodes = parseNodes(input);
-            const counts = { vless: nodes.vless.filter(Boolean).length, trojan: nodes.trojan.filter(Boolean).length, ss: nodes.ss.filter(Boolean).length, hy2: nodes.hy2.filter(Boolean).length, wg: nodes.wg.filter(Boolean).length };
+            
+            const counts = {
+                vless: nodes.vless.filter(Boolean).length,
+                trojan: nodes.trojan.filter(Boolean).length,
+                ss: nodes.ss.filter(Boolean).length,
+                hy2: nodes.hy2.filter(Boolean).length,
+                wg: nodes.wg.filter(Boolean).length
+            };
+            
             const total = counts.vless + counts.trojan + counts.ss + counts.hy2 + counts.wg;
-
+            
             if (total === 0) {
-                document.getElementById('output').textContent = '⚠️ No valid nodes found. Please check your input format.';
+                document.getElementById('output').textContent = 'No valid nodes found. Please check your input.';
                 document.getElementById('stats').style.display = 'none';
                 convertedOutput = '';
                 return;
             }
-
+            
             switch (selectedFormat) {
-                case 'base64': convertedOutput = generateBase64(nodes); break;
-                case 'singbox-legacy': convertedOutput = generateSingboxLegacy(nodes); break;
-                case 'singbox-new': convertedOutput = generateSingboxNew(nodes); break;
-                case 'clash': convertedOutput = generateClash(nodes); break;
+                case 'base64':
+                    convertedOutput = generateBase64(nodes);
+                    break;
+                case 'singbox-legacy':
+                    convertedOutput = generateSingboxLegacy(nodes);
+                    break;
+                case 'singbox-new':
+                    convertedOutput = generateSingboxNew(nodes);
+                    break;
+                case 'clash':
+                    convertedOutput = generateClash(nodes);
+                    break;
             }
-
+            
             document.getElementById('output').textContent = convertedOutput;
             document.getElementById('stats').style.display = 'flex';
             document.getElementById('total-count').textContent = total;
@@ -1511,23 +1585,53 @@
 
         function copyOutput() {
             if (!convertedOutput) return;
-            const btn = document.querySelector('.copy-btn'), copyText = document.getElementById('copy-text');
+            
+            const btn = document.querySelector('.copy-btn');
+            const copyText = document.getElementById('copy-text');
+            
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(convertedOutput).then(() => { btn.classList.add('copied'); copyText.textContent = 'Copied!'; setTimeout(() => { btn.classList.remove('copied'); copyText.textContent = 'Copy'; }, 2000); });
+                navigator.clipboard.writeText(convertedOutput).then(() => {
+                    btn.classList.add('copied');
+                    copyText.textContent = 'Copied!';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        copyText.textContent = 'Copy';
+                    }, 2000);
+                });
             } else {
-                const textArea = document.createElement('textarea'); textArea.value = convertedOutput; textArea.style.position = 'fixed'; textArea.style.left = '-9999px'; document.body.appendChild(textArea); textArea.select();
-                try { document.execCommand('copy'); btn.classList.add('copied'); copyText.textContent = 'Copied!'; setTimeout(() => { btn.classList.remove('copied'); copyText.textContent = 'Copy'; }, 2000); } catch (e) { copyText.textContent = 'Failed'; }
+                const textArea = document.createElement('textarea');
+                textArea.value = convertedOutput;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    btn.classList.add('copied');
+                    copyText.textContent = 'Copied!';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        copyText.textContent = 'Copy';
+                    }, 2000);
+                } catch (e) {
+                    copyText.textContent = 'Failed';
+                }
                 document.body.removeChild(textArea);
             }
         }
 
         function downloadOutput() {
             if (!convertedOutput) return;
-            const filename = 'config' + fileExtensions[selectedFormat];
+            
+            const filename = 'subscription' + fileExtensions[selectedFormat];
             const blob = new Blob([convertedOutput], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = filename;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
     </script>
