@@ -21,6 +21,7 @@
             --text-secondary: #94a3b8;
             --border: #334155;
             --success: #22c55e;
+            --warning: #f59e0b;
             --radius: 12px;
         }
 
@@ -145,8 +146,8 @@
 
         .format-btn {
             flex: 1;
-            min-width: 100px;
-            padding: 12px 20px;
+            min-width: 80px;
+            padding: 12px 16px;
             background: var(--bg-primary);
             border: 2px solid var(--border);
             border-radius: 8px;
@@ -155,6 +156,7 @@
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
+            font-size: 0.85rem;
         }
 
         .format-btn:hover {
@@ -166,6 +168,14 @@
             border-color: var(--accent);
             background: rgba(59, 130, 246, 0.2);
             color: #60a5fa;
+        }
+
+        .format-btn .version {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 2px;
         }
 
         .convert-btn {
@@ -200,6 +210,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .output-title {
@@ -209,7 +221,12 @@
             gap: 8px;
         }
 
-        .copy-btn {
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .copy-btn, .download-btn {
             padding: 8px 16px;
             background: var(--success);
             border: none;
@@ -224,8 +241,17 @@
             gap: 6px;
         }
 
+        .download-btn {
+            background: var(--accent);
+        }
+
         .copy-btn:hover {
             background: #16a34a;
+            transform: scale(1.02);
+        }
+
+        .download-btn:hover {
+            background: var(--accent-hover);
             transform: scale(1.02);
         }
 
@@ -239,8 +265,8 @@
             border-radius: 8px;
             padding: 15px;
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            max-height: 300px;
+            font-size: 0.75rem;
+            max-height: 400px;
             overflow-y: auto;
             white-space: pre-wrap;
             word-break: break-all;
@@ -316,6 +342,20 @@
             margin-top: 8px;
         }
 
+        .info-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #fbbf24;
+        }
+
+        .info-box strong {
+            color: #fcd34d;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -326,8 +366,9 @@
             }
 
             .format-btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
+                padding: 10px 12px;
+                font-size: 0.8rem;
+                min-width: 70px;
             }
 
             textarea {
@@ -340,6 +381,20 @@
 
             .card-description {
                 display: none;
+            }
+
+            .output-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-group {
+                width: 100%;
+            }
+
+            .copy-btn, .download-btn {
+                flex: 1;
+                justify-content: center;
             }
         }
     </style>
@@ -372,7 +427,6 @@
                 <button class="tab-btn" data-tab="ss">Shadowsocks</button>
                 <button class="tab-btn" data-tab="hy2">Hysteria2</button>
                 <button class="tab-btn" data-tab="wg">WireGuard</button>
-                <button class="tab-btn" data-tab="subs">Subscriptions</button>
             </div>
 
             <div class="input-group active" id="all-input">
@@ -404,11 +458,6 @@
                 <textarea id="wg-nodes" placeholder="WireGuard Config Name&#10;[Interface]&#10;PrivateKey = ...&#10;Address = 10.0.0.2/32&#10;DNS = 1.1.1.1&#10;&#10;[Peer]&#10;PublicKey = ...&#10;AllowedIPs = 0.0.0.0/0&#10;Endpoint = server:port"></textarea>
                 <p class="helper-text">Standard WireGuard configuration format</p>
             </div>
-
-            <div class="input-group" id="subs-input">
-                <textarea id="sub-links" placeholder="https://example.com/subscription/link1&#10;https://example.com/subscription/link2"></textarea>
-                <p class="helper-text">⚠️ Subscription URLs cannot be fetched in sandbox mode - paste node content directly</p>
-            </div>
         </div>
 
         <div class="card">
@@ -417,9 +466,25 @@
                 <span class="card-title">Output Format</span>
             </div>
             <div class="format-selector">
-                <button class="format-btn active" data-format="base64">📄 Base64</button>
-                <button class="format-btn" data-format="singbox">📦 Sing-box</button>
-                <button class="format-btn" data-format="clash">🐱 Clash</button>
+                <button class="format-btn" data-format="base64">
+                    📄 Base64
+                    <span class="version">Raw Links</span>
+                </button>
+                <button class="format-btn active" data-format="singbox-legacy">
+                    📦 Sing-box
+                    <span class="version">1.11.x (iOS)</span>
+                </button>
+                <button class="format-btn" data-format="singbox-new">
+                    📦 Sing-box
+                    <span class="version">1.12.0+</span>
+                </button>
+                <button class="format-btn" data-format="clash">
+                    🐱 Clash Meta
+                    <span class="version">Mihomo</span>
+                </button>
+            </div>
+            <div class="info-box">
+                <strong>💡 Tip:</strong> Use <strong>Sing-box 1.11.x</strong> for iOS (SFI), <strong>Sing-box 1.12.0+</strong> for Android (SFA) and newer clients, <strong>Clash Meta</strong> for Mihomo/Stash.
             </div>
             <button class="convert-btn" onclick="convertNodes()">🚀 Convert Now</button>
         </div>
@@ -430,12 +495,18 @@
                     <div class="output-title">
                         <span>📤</span>
                         <span>Converted Output</span>
-                        <span id="format-label" style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">(Base64)</span>
+                        <span id="format-label" style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">(Sing-box 1.11.x)</span>
                     </div>
-                    <button class="copy-btn" onclick="copyOutput()">
-                        <span>📋</span>
-                        <span id="copy-text">Copy</span>
-                    </button>
+                    <div class="btn-group">
+                        <button class="copy-btn" onclick="copyOutput()">
+                            <span>📋</span>
+                            <span id="copy-text">Copy</span>
+                        </button>
+                        <button class="download-btn" onclick="downloadOutput()">
+                            <span>⬇️</span>
+                            <span>Download</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="output-area" id="output"></div>
                 <div class="stats" id="stats" style="display: none;">
@@ -451,15 +522,28 @@
     </div>
 
     <script>
-        let selectedFormat = 'base64';
+        let selectedFormat = 'singbox-legacy';
         let convertedOutput = '';
+
+        const formatLabels = {
+            'base64': 'Base64',
+            'singbox-legacy': 'Sing-box 1.11.x',
+            'singbox-new': 'Sing-box 1.12.0+',
+            'clash': 'Clash Meta'
+        };
+
+        const fileExtensions = {
+            'base64': '.txt',
+            'singbox-legacy': '.json',
+            'singbox-new': '.json',
+            'clash': '.yaml'
+        };
 
         // Tab switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                
                 document.querySelectorAll('.input-group').forEach(g => g.classList.remove('active'));
                 document.getElementById(btn.dataset.tab + '-input').classList.add('active');
             });
@@ -471,8 +555,7 @@
                 document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedFormat = btn.dataset.format;
-                document.getElementById('format-label').textContent = 
-                    `(${selectedFormat === 'base64' ? 'Base64' : selectedFormat === 'singbox' ? 'Sing-box JSON' : 'Clash YAML'})`;
+                document.getElementById('format-label').textContent = `(${formatLabels[selectedFormat]})`;
             });
         });
 
@@ -483,7 +566,6 @@
             const ss = document.getElementById('ss-nodes').value;
             const hy2 = document.getElementById('hy2-nodes').value;
             const wg = document.getElementById('wg-nodes').value;
-            
             return [all, vless, trojan, ss, hy2, wg].join('\n');
         }
 
@@ -512,7 +594,6 @@
                     }
                     inWgConfig = true;
                     currentWgConfig = [line];
-                    // Check previous line for name
                     if (i > 0 && !lines[i-1].includes('://') && !lines[i-1].includes('=') && !lines[i-1].startsWith('[')) {
                         currentWgName = lines[i-1];
                     } else {
@@ -520,8 +601,7 @@
                     }
                 } else if (inWgConfig) {
                     currentWgConfig.push(line);
-                    if (line.toLowerCase().startsWith('endpoint') || 
-                        (i === lines.length - 1) || 
+                    if (line.toLowerCase().startsWith('endpoint') || (i === lines.length - 1) || 
                         (i < lines.length - 1 && (lines[i+1].startsWith('vless://') || 
                          lines[i+1].startsWith('trojan://') || lines[i+1].startsWith('ss://') ||
                          lines[i+1].startsWith('hysteria2://') || lines[i+1].startsWith('hy2://')))) {
@@ -562,6 +642,8 @@
                     pbk: params.get('pbk') || '',
                     sid: params.get('sid') || '',
                     alpn: params.get('alpn') || '',
+                    headerType: params.get('headerType') || '',
+                    mode: params.get('mode') || '',
                     raw: url
                 };
             } catch (e) {
@@ -582,6 +664,7 @@
                     port: parseInt(urlObj.port) || 443,
                     password: decodeURIComponent(urlObj.username),
                     transport: params.get('type') || 'tcp',
+                    security: params.get('security') || 'tls',
                     sni: params.get('sni') || params.get('peer') || urlObj.hostname,
                     host: params.get('host') || '',
                     path: params.get('path') || '/',
@@ -602,19 +685,16 @@
                 
                 const hashIndex = workingUrl.indexOf('#');
                 if (hashIndex !== -1) {
-                    try {
-                        name = decodeURIComponent(workingUrl.substring(hashIndex + 1));
-                    } catch (e) {
-                        name = workingUrl.substring(hashIndex + 1);
-                    }
+                    try { name = decodeURIComponent(workingUrl.substring(hashIndex + 1)); } 
+                    catch (e) { name = workingUrl.substring(hashIndex + 1); }
                     workingUrl = workingUrl.substring(0, hashIndex);
                 }
                 
                 workingUrl = workingUrl.replace(/^ss:\/\//, '');
                 
                 let method, password, server, port;
-                
                 const atIndex = workingUrl.lastIndexOf('@');
+                
                 if (atIndex !== -1) {
                     const userInfo = workingUrl.substring(0, atIndex);
                     const serverPart = workingUrl.substring(atIndex + 1);
@@ -622,12 +702,8 @@
                     let decodedUserInfo;
                     try {
                         decodedUserInfo = atob(userInfo);
-                        if (!decodedUserInfo.includes(':')) {
-                            decodedUserInfo = userInfo;
-                        }
-                    } catch (e) {
-                        decodedUserInfo = userInfo;
-                    }
+                        if (!decodedUserInfo.includes(':')) decodedUserInfo = userInfo;
+                    } catch (e) { decodedUserInfo = userInfo; }
                     
                     const colonIndex = decodedUserInfo.indexOf(':');
                     if (colonIndex !== -1) {
@@ -653,18 +729,8 @@
                     port = parseInt(serverPart.substring(serverColonIdx + 1));
                 }
                 
-                return {
-                    type: 'ss',
-                    name: name,
-                    server: server,
-                    port: port,
-                    method: method,
-                    password: password,
-                    raw: url
-                };
-            } catch (e) {
-                return null;
-            }
+                return { type: 'ss', name, server, port, method, password, raw: url };
+            } catch (e) { return null; }
         }
 
         function parseHysteria2(url) {
@@ -673,9 +739,7 @@
                 const urlObj = new URL(normalizedUrl);
                 const params = urlObj.searchParams;
                 let name = urlObj.hash ? decodeURIComponent(urlObj.hash.slice(1)) : 'hy2-node';
-                
-                let password = urlObj.username || params.get('password') || '';
-                password = decodeURIComponent(password);
+                let password = decodeURIComponent(urlObj.username || params.get('password') || '');
                 
                 return {
                     type: 'hy2',
@@ -688,9 +752,7 @@
                     obfsPassword: params.get('obfs-password') || '',
                     raw: url
                 };
-            } catch (e) {
-                return null;
-            }
+            } catch (e) { return null; }
         }
 
         function parseWireGuard(configText, name) {
@@ -700,11 +762,10 @@
                 
                 for (const line of configText.split('\n')) {
                     const trimmed = line.trim();
-                    if (trimmed.toLowerCase() === '[interface]') {
-                        currentSection = 'interface';
-                    } else if (trimmed.toLowerCase() === '[peer]') {
-                        currentSection = 'peer';
-                    } else if (currentSection && trimmed.includes('=')) {
+                    if (trimmed.toLowerCase() === '[interface]') { currentSection = 'interface'; continue; }
+                    if (trimmed.toLowerCase() === '[peer]') { currentSection = 'peer'; continue; }
+                    
+                    if (currentSection && trimmed.includes('=')) {
                         const eqIdx = trimmed.indexOf('=');
                         const key = trimmed.substring(0, eqIdx).trim().toLowerCase();
                         const value = trimmed.substring(eqIdx + 1).trim();
@@ -714,33 +775,27 @@
                             else if (key === 'address') config.interface.address = value.split(',').map(a => a.trim());
                             else if (key === 'dns') config.interface.dns = value.split(',').map(d => d.trim());
                             else if (key === 'mtu') config.interface.mtu = parseInt(value);
-                            else if (key === 'reserved') {
-                                config.interface.reserved = value.replace(/^\[|\]$/g, '').split(',').map(v => parseInt(v.trim()));
-                            }
+                            else if (key === 'reserved') config.interface.reserved = value.replace(/^\[|\]$/g, '').split(',').map(v => parseInt(v.trim()));
                         } else if (currentSection === 'peer') {
                             if (key === 'publickey') config.peer.publicKey = value;
                             else if (key === 'allowedips') config.peer.allowedIPs = value.split(',').map(a => a.trim());
                             else if (key === 'endpoint') config.peer.endpoint = value;
                             else if (key === 'presharedkey') config.peer.preSharedKey = value;
+                            else if (key === 'persistentkeepalive') config.peer.persistentKeepalive = parseInt(value);
                         }
                     }
                 }
                 
-                if (!config.peer.endpoint || !config.interface.privateKey || !config.peer.publicKey) {
-                    return null;
-                }
+                if (!config.peer.endpoint || !config.interface.privateKey || !config.peer.publicKey) return null;
                 
                 const endpointParts = config.peer.endpoint.match(/^(?:\[([^\]]+)\]|([^:]+)):(\d+)$/);
                 if (!endpointParts) return null;
                 
-                const server = endpointParts[1] || endpointParts[2];
-                const port = parseInt(endpointParts[3]);
-                
                 return {
                     type: 'wg',
                     name: name || 'wireguard-node',
-                    server: server,
-                    port: port,
+                    server: endpointParts[1] || endpointParts[2],
+                    port: parseInt(endpointParts[3]),
                     privateKey: config.interface.privateKey,
                     publicKey: config.peer.publicKey,
                     address: config.interface.address || ['10.0.0.2/32'],
@@ -748,16 +803,14 @@
                     mtu: config.interface.mtu || 1280,
                     reserved: config.interface.reserved || [],
                     allowedIPs: config.peer.allowedIPs || ['0.0.0.0/0', '::/0'],
-                    preSharedKey: config.peer.preSharedKey || ''
+                    preSharedKey: config.peer.preSharedKey || '',
+                    persistentKeepalive: config.peer.persistentKeepalive || 0
                 };
-            } catch (e) {
-                return null;
-            }
+            } catch (e) { return null; }
         }
 
         function generateBase64(nodes) {
             const lines = [];
-            
             nodes.vless.filter(Boolean).forEach(n => lines.push(n.raw));
             nodes.trojan.filter(Boolean).forEach(n => lines.push(n.raw));
             nodes.ss.filter(Boolean).forEach(n => lines.push(n.raw));
@@ -770,316 +823,718 @@
                 if (n.mtu) params.set('mtu', String(n.mtu));
                 lines.push(`wireguard://${encodeURIComponent(n.privateKey)}@${n.server}:${n.port}?${params.toString()}#${encodeURIComponent(n.name)}`);
             });
-            
             return btoa(unescape(encodeURIComponent(lines.join('\n'))));
         }
 
-        function generateSingbox(nodes) {
+        function generateSingboxLegacy(nodes) {
+            const proxyOutbounds = [];
+            const wireguardEndpoints = [];
+            
+            // Parse all nodes
+            nodes.vless.filter(Boolean).forEach(n => proxyOutbounds.push(buildVlessSingbox(n)));
+            nodes.trojan.filter(Boolean).forEach(n => proxyOutbounds.push(buildTrojanSingbox(n)));
+            nodes.ss.filter(Boolean).forEach(n => proxyOutbounds.push(buildSSSingbox(n)));
+            nodes.hy2.filter(Boolean).forEach(n => proxyOutbounds.push(buildHy2Singbox(n)));
+            nodes.wg.filter(Boolean).forEach(n => wireguardEndpoints.push(buildWGSingbox(n)));
+            
+            const proxyTags = [...proxyOutbounds.map(o => o.tag), ...wireguardEndpoints.map(e => e.tag)];
+            
             const config = {
-                "log": { "level": "info" },
-                "outbounds": [{ "type": "direct", "tag": "direct" }],
-                "endpoints": []
+                "log": { "disabled": true, "level": "info" },
+                "dns": {
+                    "servers": [
+                        {
+                            "tag": "primary-dns",
+                            "address": "https://cloudflare-dns.com/dns-query",
+                            "address_resolver": "bootstrap-dns",
+                            "strategy": "prefer_ipv4",
+                            "detour": "🩺 Proxy"
+                        },
+                        {
+                            "tag": "bootstrap-dns",
+                            "address": "8.8.8.8",
+                            "strategy": "prefer_ipv4",
+                            "detour": "direct"
+                        },
+                        {
+                            "tag": "direct-dns",
+                            "address": "1.1.1.1",
+                            "strategy": "prefer_ipv4",
+                            "detour": "direct"
+                        },
+                        { "tag": "fake-dns", "address": "fakeip" }
+                    ],
+                    "rules": [
+                        { "outbound": "any", "server": "bootstrap-dns", "rewrite_ttl": 300 },
+                        { "domain_suffix": [".cn", ".xn--fiqs8s", ".xn--fiqz9s"], "server": "direct-dns", "rewrite_ttl": 300 },
+                        { "inbound": "tun-in", "query_type": ["A", "AAAA"], "server": "fake-dns", "disable_cache": true }
+                    ],
+                    "fakeip": { "enabled": true, "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" },
+                    "reverse_mapping": true,
+                    "strategy": "prefer_ipv4",
+                    "independent_cache": true
+                },
+                "inbounds": [
+                    { "type": "direct", "tag": "dns-in-udp", "listen": "127.0.0.1", "listen_port": 8853, "network": "udp" },
+                    { "type": "direct", "tag": "dns-in-tcp", "listen": "127.0.0.1", "listen_port": 8854, "network": "tcp" },
+                    { "type": "mixed", "tag": "mixed-in", "listen": "0.0.0.0", "listen_port": 2080 },
+                    {
+                        "type": "tun", "tag": "tun-in", "mtu": 9000,
+                        "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
+                        "auto_route": true, "strict_route": true,
+                        "route_exclude_address": ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "fc00::/7"],
+                        "stack": "mixed", "endpoint_independent_nat": true
+                    }
+                ],
+                "outbounds": [],
+                "route": {
+                    "rules": [
+                        { "action": "sniff" },
+                        { "inbound": ["dns-in-udp", "dns-in-tcp"], "action": "route", "outbound": "direct", "override_address": "8.8.8.8", "override_port": 53 },
+                        { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
+                        { "network": "udp", "port": [443, 853], "action": "reject", "method": "default" },
+                        { "protocol": "stun", "action": "reject", "method": "default" },
+                        { "protocol": "http", "outbound": "direct" },
+                        { "source_ip_cidr": ["224.0.0.0/3", "ff00::/8"], "ip_cidr": ["224.0.0.0/3", "ff00::/8"], "action": "reject", "method": "default" },
+                        { "ip_cidr": ["10.10.34.34", "10.10.34.35", "10.10.34.36"], "action": "reject", "method": "default" },
+                        { "ip_is_private": true, "outbound": "direct" },
+                        { "domain_suffix": [".cn", ".xn--fiqs8s", ".xn--fiqz9s"], "outbound": "direct" }
+                    ],
+                    "auto_detect_interface": true
+                },
+                "experimental": { "cache_file": { "enabled": true, "store_fakeip": true } }
             };
             
-            const allOutbounds = [];
-            const allEndpoints = [];
-            
-            nodes.vless.filter(Boolean).forEach(n => {
-                const outbound = {
-                    "type": "vless",
-                    "tag": n.name,
-                    "server": n.server,
-                    "server_port": n.port,
-                    "uuid": n.uuid
-                };
-                
-                if (n.security === 'tls' || n.security === 'reality') {
-                    outbound.tls = {
-                        "enabled": true,
-                        "server_name": n.sni,
-                        "insecure": false
-                    };
-                    if (n.security === 'reality') {
-                        outbound.tls.reality = {
-                            "enabled": true,
-                            "public_key": n.pbk,
-                            "short_id": n.sid
-                        };
-                    }
-                }
-                
-                if (n.transport === 'ws') {
-                    outbound.transport = {
-                        "type": "ws",
-                        "path": n.path,
-                        "headers": { "Host": n.host || n.sni }
-                    };
-                } else if (n.transport === 'grpc') {
-                    outbound.transport = {
-                        "type": "grpc",
-                        "service_name": n.serviceName
-                    };
-                }
-                
-                if (n.flow) outbound.flow = n.flow;
-                
-                allOutbounds.push(outbound);
-            });
-            
-            nodes.trojan.filter(Boolean).forEach(n => {
-                const outbound = {
-                    "type": "trojan",
-                    "tag": n.name,
-                    "server": n.server,
-                    "server_port": n.port,
-                    "password": n.password,
-                    "tls": {
-                        "enabled": true,
-                        "server_name": n.sni,
-                        "insecure": false
-                    }
-                };
-                
-                if (n.transport === 'ws') {
-                    outbound.transport = {
-                        "type": "ws",
-                        "path": n.path,
-                        "headers": { "Host": n.host || n.sni }
-                    };
-                } else if (n.transport === 'grpc') {
-                    outbound.transport = {
-                        "type": "grpc",
-                        "service_name": n.serviceName
-                    };
-                }
-                
-                allOutbounds.push(outbound);
-            });
-            
-            nodes.ss.filter(Boolean).forEach(n => {
-                allOutbounds.push({
-                    "type": "shadowsocks",
-                    "tag": n.name,
-                    "server": n.server,
-                    "server_port": n.port,
-                    "method": n.method,
-                    "password": n.password
-                });
-            });
-            
-            nodes.hy2.filter(Boolean).forEach(n => {
-                const outbound = {
-                    "type": "hysteria2",
-                    "tag": n.name,
-                    "server": n.server,
-                    "server_port": n.port,
-                    "password": n.password,
-                    "tls": {
-                        "enabled": true,
-                        "server_name": n.sni,
-                        "insecure": false,
-                        "alpn": ["h3"]
-                    }
-                };
-                
-                if (n.obfs && n.obfs !== 'none') {
-                    outbound.obfs = { "type": n.obfs, "password": n.obfsPassword };
-                }
-                
-                allOutbounds.push(outbound);
-            });
-            
-            nodes.wg.filter(Boolean).forEach(n => {
-                allEndpoints.push({
-                    "type": "wireguard",
-                    "tag": n.name,
-                    "mtu": n.mtu,
-                    "address": n.address,
-                    "private_key": n.privateKey,
-                    "peers": [{
-                        "address": n.server,
-                        "port": n.port,
-                        "public_key": n.publicKey,
-                        "allowed_ips": n.allowedIPs,
-                        ...(n.preSharedKey ? { "pre_shared_key": n.preSharedKey } : {}),
-                        ...(n.reserved.length === 3 ? { "reserved": n.reserved } : {})
-                    }]
-                });
-            });
-            
-            const proxyTags = [...allOutbounds.map(o => o.tag), ...allEndpoints.map(e => e.tag)];
+            // Build outbounds
+            config.outbounds.push({ "type": "direct", "tag": "direct" });
             
             if (proxyTags.length > 0) {
+                const selectorOutbounds = proxyTags.length > 1 ? ["⚡ Auto Select", ...proxyTags] : [...proxyTags];
                 config.outbounds.unshift({
                     "type": "selector",
-                    "tag": "🚀 Proxy",
-                    "outbounds": proxyTags,
-                    "default": proxyTags[0]
+                    "tag": "🩺 Proxy",
+                    "outbounds": selectorOutbounds,
+                    "default": selectorOutbounds[0],
+                    "interrupt_exist_connections": false
                 });
                 
                 if (proxyTags.length > 1) {
                     config.outbounds.push({
                         "type": "urltest",
-                        "tag": "⚡ Auto",
-                        "outbounds": proxyTags,
+                        "tag": "⚡ Auto Select",
+                        "outbounds": [...proxyTags],
                         "url": "https://www.gstatic.com/generate_204",
-                        "interval": "3m"
+                        "interval": "3m",
+                        "tolerance": 50,
+                        "idle_timeout": "30m",
+                        "interrupt_exist_connections": false
                     });
                 }
             }
             
-            config.outbounds.push(...allOutbounds);
-            if (allEndpoints.length > 0) {
-                config.endpoints = allEndpoints;
-            } else {
-                delete config.endpoints;
+            config.outbounds.push(...proxyOutbounds);
+            
+            if (wireguardEndpoints.length > 0) {
+                config.endpoints = wireguardEndpoints;
             }
             
             return JSON.stringify(config, null, 2);
         }
 
-        function generateClash(nodes) {
-            let yaml = `# Clash Meta Configuration
-# Generated by Subscription Converter
-
-mixed-port: 7890
-allow-lan: true
-mode: rule
-log-level: info
-
-proxies:\n`;
+        function generateSingboxNew(nodes) {
+            const proxyOutbounds = [];
+            const wireguardEndpoints = [];
             
-            nodes.vless.filter(Boolean).forEach(n => {
-                yaml += `  - name: "${n.name}"\n`;
-                yaml += `    type: vless\n`;
-                yaml += `    server: ${n.server}\n`;
-                yaml += `    port: ${n.port}\n`;
-                yaml += `    uuid: ${n.uuid}\n`;
-                yaml += `    udp: true\n`;
+            nodes.vless.filter(Boolean).forEach(n => proxyOutbounds.push(buildVlessSingbox(n)));
+            nodes.trojan.filter(Boolean).forEach(n => proxyOutbounds.push(buildTrojanSingbox(n)));
+            nodes.ss.filter(Boolean).forEach(n => proxyOutbounds.push(buildSSSingbox(n)));
+            nodes.hy2.filter(Boolean).forEach(n => proxyOutbounds.push(buildHy2Singbox(n)));
+            nodes.wg.filter(Boolean).forEach(n => wireguardEndpoints.push(buildWGSingbox(n)));
+            
+            const proxyTags = [...proxyOutbounds.map(o => o.tag), ...wireguardEndpoints.map(e => e.tag)];
+            
+            const config = {
+                "log": { "disabled": true, "level": "info" },
+                "dns": {
+                    "servers": [
+                        {
+                            "type": "https",
+                            "tag": "primary-dns",
+                            "server": "cloudflare-dns.com",
+                            "server_port": 443,
+                            "path": "/dns-query",
+                            "detour": "🩺 Proxy"
+                        },
+                        { "type": "udp", "tag": "bootstrap-dns", "server": "8.8.8.8", "server_port": 53 },
+                        { "type": "udp", "tag": "direct-dns", "server": "1.1.1.1", "server_port": 53 },
+                        { "type": "fakeip", "tag": "fake-dns", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
+                    ],
+                    "rules": [
+                        { "domain_suffix": [".cn", ".xn--fiqs8s", ".xn--fiqz9s"], "action": "route", "server": "direct-dns", "rewrite_ttl": 300 },
+                        { "inbound": "tun-in", "query_type": ["A", "AAAA"], "action": "route", "server": "fake-dns" }
+                    ],
+                    "strategy": "prefer_ipv4",
+                    "independent_cache": true
+                },
+                "inbounds": [
+                    { "type": "direct", "tag": "dns-in-udp", "listen": "127.0.0.1", "listen_port": 8853, "network": "udp" },
+                    { "type": "direct", "tag": "dns-in-tcp", "listen": "127.0.0.1", "listen_port": 8854, "network": "tcp" },
+                    { "type": "mixed", "tag": "mixed-in", "listen": "0.0.0.0", "listen_port": 2080 },
+                    {
+                        "type": "tun", "tag": "tun-in", "mtu": 9000,
+                        "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
+                        "auto_route": true, "strict_route": true,
+                        "route_exclude_address": ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "fc00::/7"],
+                        "stack": "mixed", "endpoint_independent_nat": true
+                    }
+                ],
+                "outbounds": [],
+                "route": {
+                    "default_domain_resolver": "bootstrap-dns",
+                    "rules": [
+                        { "action": "sniff" },
+                        { "inbound": ["dns-in-udp", "dns-in-tcp"], "action": "route", "outbound": "direct", "override_address": "8.8.8.8", "override_port": 53 },
+                        { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
+                        { "network": "udp", "port": [443, 853], "action": "reject", "method": "default" },
+                        { "protocol": "stun", "action": "reject", "method": "default" },
+                        { "protocol": "http", "outbound": "direct" },
+                        { "source_ip_cidr": ["224.0.0.0/3", "ff00::/8"], "ip_cidr": ["224.0.0.0/3", "ff00::/8"], "action": "reject", "method": "default" },
+                        { "ip_cidr": ["10.10.34.34", "10.10.34.35", "10.10.34.36"], "action": "reject", "method": "default" },
+                        { "ip_is_private": true, "outbound": "direct" },
+                        { "domain_suffix": [".cn", ".xn--fiqs8s", ".xn--fiqz9s"], "outbound": "direct" }
+                    ],
+                    "auto_detect_interface": true
+                },
+                "experimental": { "cache_file": { "enabled": true, "store_fakeip": true } }
+            };
+            
+            config.outbounds.push({ "type": "direct", "tag": "direct" });
+            
+            if (proxyTags.length > 0) {
+                const selectorOutbounds = proxyTags.length > 1 ? ["⚡ Auto Select", ...proxyTags] : [...proxyTags];
+                config.outbounds.unshift({
+                    "type": "selector",
+                    "tag": "🩺 Proxy",
+                    "outbounds": selectorOutbounds,
+                    "default": selectorOutbounds[0],
+                    "interrupt_exist_connections": false
+                });
                 
-                if (n.security === 'tls') {
-                    yaml += `    tls: true\n`;
-                    yaml += `    servername: ${n.sni}\n`;
-                    yaml += `    skip-cert-verify: false\n`;
-                } else if (n.security === 'reality') {
-                    yaml += `    tls: true\n`;
-                    yaml += `    servername: ${n.sni}\n`;
-                    yaml += `    reality-opts:\n`;
-                    yaml += `      public-key: ${n.pbk}\n`;
-                    yaml += `      short-id: ${n.sid}\n`;
-                    yaml += `    client-fingerprint: chrome\n`;
+                if (proxyTags.length > 1) {
+                    config.outbounds.push({
+                        "type": "urltest",
+                        "tag": "⚡ Auto Select",
+                        "outbounds": [...proxyTags],
+                        "url": "https://www.gstatic.com/generate_204",
+                        "interval": "3m",
+                        "tolerance": 50,
+                        "idle_timeout": "30m",
+                        "interrupt_exist_connections": false
+                    });
                 }
-                
-                if (n.transport === 'ws') {
-                    yaml += `    network: ws\n`;
-                    yaml += `    ws-opts:\n`;
-                    yaml += `      path: ${n.path}\n`;
-                    yaml += `      headers:\n`;
-                    yaml += `        Host: ${n.host || n.sni}\n`;
-                } else if (n.transport === 'grpc') {
-                    yaml += `    network: grpc\n`;
-                    yaml += `    grpc-opts:\n`;
-                    yaml += `      grpc-service-name: ${n.serviceName}\n`;
-                }
-                
-                if (n.flow) yaml += `    flow: ${n.flow}\n`;
-                yaml += '\n';
-            });
-            
-            nodes.trojan.filter(Boolean).forEach(n => {
-                yaml += `  - name: "${n.name}"\n`;
-                yaml += `    type: trojan\n`;
-                yaml += `    server: ${n.server}\n`;
-                yaml += `    port: ${n.port}\n`;
-                yaml += `    password: ${n.password}\n`;
-                yaml += `    udp: true\n`;
-                yaml += `    sni: ${n.sni}\n`;
-                yaml += `    skip-cert-verify: false\n`;
-                
-                if (n.transport === 'ws') {
-                    yaml += `    network: ws\n`;
-                    yaml += `    ws-opts:\n`;
-                    yaml += `      path: ${n.path}\n`;
-                    yaml += `      headers:\n`;
-                    yaml += `        Host: ${n.host || n.sni}\n`;
-                } else if (n.transport === 'grpc') {
-                    yaml += `    network: grpc\n`;
-                    yaml += `    grpc-opts:\n`;
-                    yaml += `      grpc-service-name: ${n.serviceName}\n`;
-                }
-                yaml += '\n';
-            });
-            
-            nodes.ss.filter(Boolean).forEach(n => {
-                yaml += `  - name: "${n.name}"\n`;
-                yaml += `    type: ss\n`;
-                yaml += `    server: ${n.server}\n`;
-                yaml += `    port: ${n.port}\n`;
-                yaml += `    cipher: ${n.method}\n`;
-                yaml += `    password: ${n.password}\n`;
-                yaml += `    udp: true\n\n`;
-            });
-            
-            nodes.hy2.filter(Boolean).forEach(n => {
-                yaml += `  - name: "${n.name}"\n`;
-                yaml += `    type: hysteria2\n`;
-                yaml += `    server: ${n.server}\n`;
-                yaml += `    port: ${n.port}\n`;
-                yaml += `    password: ${n.password}\n`;
-                yaml += `    sni: ${n.sni}\n`;
-                yaml += `    skip-cert-verify: false\n`;
-                yaml += `    alpn:\n      - h3\n`;
-                if (n.obfs && n.obfs !== 'none') {
-                    yaml += `    obfs: ${n.obfs}\n`;
-                    yaml += `    obfs-password: ${n.obfsPassword}\n`;
-                }
-                yaml += '\n';
-            });
-            
-            nodes.wg.filter(Boolean).forEach(n => {
-                yaml += `  - name: "${n.name}"\n`;
-                yaml += `    type: wireguard\n`;
-                yaml += `    server: ${n.server}\n`;
-                yaml += `    port: ${n.port}\n`;
-                yaml += `    private-key: ${n.privateKey}\n`;
-                yaml += `    public-key: ${n.publicKey}\n`;
-                if (n.address[0]) yaml += `    ip: ${n.address[0].split('/')[0]}\n`;
-                yaml += `    udp: true\n`;
-                if (n.mtu) yaml += `    mtu: ${n.mtu}\n`;
-                if (n.reserved.length === 3) yaml += `    reserved: [${n.reserved.join(', ')}]\n`;
-                yaml += '\n';
-            });
-            
-            const allNames = [
-                ...nodes.vless.filter(Boolean).map(n => n.name),
-                ...nodes.trojan.filter(Boolean).map(n => n.name),
-                ...nodes.ss.filter(Boolean).map(n => n.name),
-                ...nodes.hy2.filter(Boolean).map(n => n.name),
-                ...nodes.wg.filter(Boolean).map(n => n.name)
-            ];
-            
-            yaml += `proxy-groups:\n`;
-            yaml += `  - name: "🚀 Proxy"\n`;
-            yaml += `    type: select\n`;
-            yaml += `    proxies:\n`;
-            if (allNames.length > 1) yaml += `      - "⚡ Auto"\n`;
-            allNames.forEach(name => yaml += `      - "${name}"\n`);
-            yaml += `      - DIRECT\n\n`;
-            
-            if (allNames.length > 1) {
-                yaml += `  - name: "⚡ Auto"\n`;
-                yaml += `    type: url-test\n`;
-                yaml += `    proxies:\n`;
-                allNames.forEach(name => yaml += `      - "${name}"\n`);
-                yaml += `    url: "https://www.gstatic.com/generate_204"\n`;
-                yaml += `    interval: 180\n\n`;
             }
             
-            yaml += `rules:\n`;
-            yaml += `  - GEOIP,CN,DIRECT\n`;
-            yaml += `  - MATCH,🚀 Proxy\n`;
+            config.outbounds.push(...proxyOutbounds);
+            
+            if (wireguardEndpoints.length > 0) {
+                config.endpoints = wireguardEndpoints;
+            }
+            
+            return JSON.stringify(config, null, 2);
+        }
+
+        function buildVlessSingbox(n) {
+            const outbound = {
+                "type": "vless",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "uuid": n.uuid,
+                "tcp_fast_open": true,
+                "tcp_multi_path": true
+            };
+            
+            if (n.security === 'tls' || n.security === 'reality') {
+                outbound.tls = {
+                    "enabled": true,
+                    "insecure": false,
+                    "server_name": n.sni,
+                    "min_version": "1.2",
+                    "utls": { "enabled": true, "fingerprint": n.fp || "randomized" }
+                };
+                if (n.alpn) outbound.tls.alpn = n.alpn.split(',').map(a => a.trim());
+                if (n.security === 'reality') {
+                    outbound.tls.reality = { "enabled": true, "public_key": n.pbk, "short_id": n.sid };
+                }
+            }
+            
+            if (n.transport === 'ws') {
+                outbound.transport = {
+                    "type": "ws",
+                    "path": n.path,
+                    "headers": { "Host": n.host || n.sni }
+                };
+                const edMatch = n.path.match(/[?&]ed=(\d+)/i);
+                if (edMatch) {
+                    outbound.transport.max_early_data = parseInt(edMatch[1]);
+                    outbound.transport.early_data_header_name = "Sec-WebSocket-Protocol";
+                }
+            } else if (n.transport === 'grpc') {
+                outbound.transport = { "type": "grpc", "service_name": n.serviceName };
+            } else if (n.transport === 'http' || n.transport === 'xhttp') {
+                outbound.transport = {
+                    "type": "http",
+                    "path": n.path,
+                    "headers": { "Host": n.host || n.sni }
+                };
+                if (n.mode) outbound.transport.method = n.mode.toUpperCase();
+            }
+            
+            if (n.flow && n.transport === 'tcp') outbound.flow = n.flow;
+            
+            return outbound;
+        }
+
+        function buildTrojanSingbox(n) {
+            const outbound = {
+                "type": "trojan",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "password": n.password,
+                "tcp_fast_open": true,
+                "tcp_multi_path": true,
+                "tls": {
+                    "enabled": true,
+                    "insecure": false,
+                    "server_name": n.sni,
+                    "min_version": "1.2",
+                    "utls": { "enabled": true, "fingerprint": n.fp || "randomized" }
+                }
+            };
+            
+            if (n.alpn) outbound.tls.alpn = n.alpn.split(',').map(a => a.trim());
+            
+            if (n.transport === 'ws') {
+                outbound.transport = {
+                    "type": "ws",
+                    "path": n.path,
+                    "headers": { "Host": n.host || n.sni }
+                };
+            } else if (n.transport === 'grpc') {
+                outbound.transport = { "type": "grpc", "service_name": n.serviceName };
+            }
+            
+            return outbound;
+        }
+
+        function buildSSSingbox(n) {
+            return {
+                "type": "shadowsocks",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "method": n.method,
+                "password": n.password,
+                "udp_over_tcp": { "enabled": true, "version": 2 }
+            };
+        }
+
+        function buildHy2Singbox(n) {
+            const outbound = {
+                "type": "hysteria2",
+                "tag": n.name,
+                "server": n.server,
+                "server_port": n.port,
+                "password": n.password,
+                "tls": {
+                    "enabled": true,
+                    "insecure": false,
+                    "server_name": n.sni,
+                    "alpn": ["h3"],
+                    "min_version": "1.2"
+                },
+                "tcp_fast_open": true,
+                "tcp_multi_path": true,
+                "up_mbps": 100,
+                "down_mbps": 2000
+            };
+            
+            if (n.obfs && n.obfs !== 'none') {
+                outbound.obfs = { "type": n.obfs, "password": n.obfsPassword };
+            }
+            
+            return outbound;
+        }
+
+        function buildWGSingbox(n) {
+            const peer = {
+                "address": n.server,
+                "port": n.port,
+                "public_key": n.publicKey,
+                "allowed_ips": n.allowedIPs || ["0.0.0.0/0", "::/0"]
+            };
+            
+            if (n.preSharedKey) peer.pre_shared_key = n.preSharedKey;
+            if (n.persistentKeepalive > 0) peer.persistent_keepalive_interval = n.persistentKeepalive;
+            if (n.reserved && n.reserved.length === 3) peer.reserved = n.reserved;
+            
+            return {
+                "type": "wireguard",
+                "tag": n.name,
+                "mtu": n.mtu || 1280,
+                "address": n.address || ["10.0.0.2/32"],
+                "private_key": n.privateKey,
+                "peers": [peer]
+            };
+        }
+
+        function generateClash(nodes) {
+            const proxies = [];
+            const proxyNames = [];
+            
+            nodes.vless.filter(Boolean).forEach(n => {
+                proxies.push(buildVlessClash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.trojan.filter(Boolean).forEach(n => {
+                proxies.push(buildTrojanClash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.ss.filter(Boolean).forEach(n => {
+                proxies.push(buildSSClash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.hy2.filter(Boolean).forEach(n => {
+                proxies.push(buildHy2Clash(n));
+                proxyNames.push(n.name);
+            });
+            nodes.wg.filter(Boolean).forEach(n => {
+                proxies.push(buildWGClash(n));
+                proxyNames.push(n.name);
+            });
+            
+            let yaml = `# ═══════════════════════════════════════════════════════════════════
+# Clash Meta (Mihomo) Configuration
+# Generated by Subscription Converter
+# ═══════════════════════════════════════════════════════════════════
+
+mixed-port: 7890
+socks-port: 7891
+port: 7892
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+unified-delay: true
+tcp-concurrent: true
+geodata-mode: true
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  mtu: 9000
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  prefer-h3: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.localhost"
+    - "+.test"
+    - "+.invalid"
+    - "+.home.arpa"
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.edu.cn"
+    - "time.*.apple.com"
+    - "time-ios.apple.com"
+    - "ntp.*.com"
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - "+.pool.ntp.org"
+    - "music.163.com"
+    - "*.music.163.com"
+    - "*.126.net"
+    - "y.qq.com"
+    - "*.y.qq.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.qq.com"
+    - "+.tencent.com"
+    - "stun.*.*"
+    - "stun.*.*.*"
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "lens.l.google.com"
+    - "stun.l.google.com"
+    - "+.nflxvideo.net"
+    - "*.mcdn.bilivideo.cn"
+    - "+.media.dssott.com"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 1.1.1.1
+    - 8.8.8.8
+  nameserver:
+    - "https://dns.cloudflare.com/dns-query"
+    - "https://dns.google/dns-query"
+  fallback:
+    - "https://1.1.1.1/dns-query"
+    - "https://8.8.8.8/dns-query"
+    - "tls://dns.google:853"
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    ipcidr:
+      - 240.0.0.0/4
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+
+proxies:
+`;
+            
+            proxies.forEach(p => { yaml += p; });
+            
+            yaml += `
+proxy-groups:
+  - name: "🩺 Proxy"
+    type: select
+    proxies:
+`;
+            if (proxyNames.length > 1) yaml += `      - "⚡ Auto Select"\n`;
+            if (proxyNames.length > 1) yaml += `      - "🔄 Fallback"\n`;
+            proxyNames.forEach(name => yaml += `      - "${name}"\n`);
+            yaml += `      - DIRECT\n`;
+            
+            if (proxyNames.length > 1) {
+                yaml += `
+  - name: "⚡ Auto Select"
+    type: url-test
+    proxies:
+`;
+                proxyNames.forEach(name => yaml += `      - "${name}"\n`);
+                yaml += `    url: "https://www.gstatic.com/generate_204"
+    interval: 180
+    tolerance: 50
+    lazy: true
+
+  - name: "🔄 Fallback"
+    type: fallback
+    proxies:
+`;
+                proxyNames.forEach(name => yaml += `      - "${name}"\n`);
+                yaml += `    url: "https://www.gstatic.com/generate_204"
+    interval: 180
+`;
+            }
+            
+            yaml += `
+rules:
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+  - IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+  - IP-CIDR,fe80::/10,DIRECT,no-resolve
+  - IP-CIDR,fc00::/7,DIRECT,no-resolve
+  - IP-CIDR,::1/128,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,cn,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
+  - MATCH,🩺 Proxy
+`;
             
             return yaml;
+        }
+
+        function buildVlessClash(n) {
+            let yaml = `  - name: "${n.name}"
+    type: vless
+    server: ${n.server}
+    port: ${n.port}
+    uuid: ${n.uuid}
+    udp: true
+    tfo: true
+`;
+            
+            if (n.security === 'tls') {
+                yaml += `    tls: true
+    servername: ${n.sni}
+    skip-cert-verify: false
+`;
+                if (n.alpn) yaml += `    alpn:\n${n.alpn.split(',').map(a => `      - ${a.trim()}`).join('\n')}\n`;
+                if (n.fp) yaml += `    client-fingerprint: ${n.fp}\n`;
+            } else if (n.security === 'reality') {
+                yaml += `    tls: true
+    servername: ${n.sni}
+    skip-cert-verify: false
+    reality-opts:
+      public-key: ${n.pbk}
+      short-id: ${n.sid}
+    client-fingerprint: ${n.fp || 'chrome'}
+`;
+            }
+            
+            if (n.flow) yaml += `    flow: ${n.flow}\n`;
+            
+            if (n.transport === 'ws') {
+                yaml += `    network: ws
+    ws-opts:
+      path: ${n.path}
+      headers:
+        Host: ${n.host || n.sni}
+`;
+            } else if (n.transport === 'grpc') {
+                yaml += `    network: grpc
+    grpc-opts:
+      grpc-service-name: "${n.serviceName}"
+`;
+            } else if (n.transport === 'http' || n.transport === 'xhttp') {
+                yaml += `    network: http
+    http-opts:
+      path:
+        - ${n.path}
+      headers:
+        Host:
+          - ${n.host || n.sni}
+`;
+            }
+            
+            return yaml + '\n';
+        }
+
+        function buildTrojanClash(n) {
+            let yaml = `  - name: "${n.name}"
+    type: trojan
+    server: ${n.server}
+    port: ${n.port}
+    password: ${n.password}
+    udp: true
+    tfo: true
+    sni: ${n.sni}
+    skip-cert-verify: false
+`;
+            
+            if (n.alpn) yaml += `    alpn:\n${n.alpn.split(',').map(a => `      - ${a.trim()}`).join('\n')}\n`;
+            if (n.fp) yaml += `    client-fingerprint: ${n.fp}\n`;
+            
+            if (n.transport === 'ws') {
+                yaml += `    network: ws
+    ws-opts:
+      path: ${n.path}
+      headers:
+        Host: ${n.host || n.sni}
+`;
+            } else if (n.transport === 'grpc') {
+                yaml += `    network: grpc
+    grpc-opts:
+      grpc-service-name: "${n.serviceName}"
+`;
+            }
+            
+            return yaml + '\n';
+        }
+
+        function buildSSClash(n) {
+            return `  - name: "${n.name}"
+    type: ss
+    server: ${n.server}
+    port: ${n.port}
+    cipher: ${n.method}
+    password: ${n.password}
+    udp: true
+    udp-over-tcp: true
+
+`;
+        }
+
+        function buildHy2Clash(n) {
+            let yaml = `  - name: "${n.name}"
+    type: hysteria2
+    server: ${n.server}
+    port: ${n.port}
+    password: ${n.password}
+    sni: ${n.sni}
+    skip-cert-verify: false
+    alpn:
+      - h3
+`;
+            
+            if (n.obfs && n.obfs !== 'none') {
+                yaml += `    obfs: ${n.obfs}
+    obfs-password: ${n.obfsPassword}
+`;
+            }
+            
+            return yaml + '\n';
+        }
+
+        function buildWGClash(n) {
+            let yaml = `  - name: "${n.name}"
+    type: wireguard
+    server: ${n.server}
+    port: ${n.port}
+    private-key: ${n.privateKey}
+    public-key: ${n.publicKey}
+    udp: true
+`;
+            
+            if (n.address && n.address[0]) yaml += `    ip: ${n.address[0].split('/')[0]}\n`;
+            if (n.mtu) yaml += `    mtu: ${n.mtu}\n`;
+            if (n.reserved && n.reserved.length === 3) yaml += `    reserved: [${n.reserved.join(', ')}]\n`;
+            if (n.dns && n.dns.length > 0) yaml += `    dns:\n${n.dns.map(d => `      - ${d}`).join('\n')}\n`;
+            
+            return yaml + '\n';
         }
 
         function convertNodes() {
@@ -1107,8 +1562,11 @@ proxies:\n`;
                 case 'base64':
                     convertedOutput = generateBase64(nodes);
                     break;
-                case 'singbox':
-                    convertedOutput = generateSingbox(nodes);
+                case 'singbox-legacy':
+                    convertedOutput = generateSingboxLegacy(nodes);
+                    break;
+                case 'singbox-new':
+                    convertedOutput = generateSingboxNew(nodes);
                     break;
                 case 'clash':
                     convertedOutput = generateClash(nodes);
@@ -1160,6 +1618,21 @@ proxies:\n`;
                 }
                 document.body.removeChild(textArea);
             }
+        }
+
+        function downloadOutput() {
+            if (!convertedOutput) return;
+            
+            const filename = 'subscription' + fileExtensions[selectedFormat];
+            const blob = new Blob([convertedOutput], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
